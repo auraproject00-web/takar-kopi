@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Informasi Perpustakaan Sekolah</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="app">
+    <div id="login-screen" class="screen active">
+      <div class="login-container glass-card">
+        <div class="login-header">
+          <div class="logo">📚</div>
+          <h1>Perpustakaan Sekolah</h1>
+          <p class="subtitle">Sistem Informasi Perpustakaan</p>
+        </div>
+        <form id="login-form" class="login-form">
+          <div class="form-group">
+            <label for="role">Login Sebagai</label>
+            <select id="role" name="role" required>
+              <option value="admin">Admin Perpustakaan</option>
+              <option value="student">Siswa</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Masukkan username" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Masukkan password" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">MASUK</button>
+          <div id="login-error" class="error-message hidden"></div>
+        </form>
+        <div class="login-footer">
+          <p>Demo: admin / admin123 | andi / andi123</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="admin-screen" class="screen">
+      <aside id="admin-sidebar" class="sidebar glass-panel">
+        <div class="sidebar-header">
+          <div class="logo">📚</div>
+          <h2>Admin Panel</h2>
+        </div>
+        <nav class="sidebar-nav">
+          <a href="#" data-page="dashboard" class="nav-item active"><span class="nav-icon">📊</span> Dashboard</a>
+          <a href="#" data-page="books" class="nav-item"><span class="nav-icon">📖</span> Data Buku</a>
+          <a href="#" data-page="members" class="nav-item"><span class="nav-icon">👥</span> Data Anggota</a>
+          <a href="#" data-page="transactions" class="nav-item"><span class="nav-icon">🔄</span> Transaksi</a>
+          <a href="#" data-page="reports" class="nav-item"><span class="nav-icon">📋</span> Laporan</a>
+          <a href="#" data-page="settings" class="nav-item"><span class="nav-icon">⚙️</span> Pengaturan</a>
+        </nav>
+        <div class="sidebar-footer">
+          <button id="admin-logout" class="btn btn-danger btn-full">Logout</button>
+        </div>
+      </aside>
+      <div class="main-content">
+        <header class="topbar glass-panel">
+          <div class="topbar-left">
+            <button id="sidebar-toggle" class="btn btn-icon" aria-label="Toggle sidebar">☰</button>
+            <h1 id="page-title">Dashboard</h1>
+          </div>
+          <div class="topbar-right">
+            <div class="network-info glass-chip" id="network-info">📡 Local Network</div>
+            <div class="user-menu glass-chip">👤 Admin</div>
+          </div>
+        </header>
+        <main id="admin-main" class="content-area"></main>
+      </div>
+    </div>
+
+    <div id="student-screen" class="screen">
+      <aside id="student-sidebar" class="sidebar glass-panel">
+        <div class="sidebar-header">
+          <div class="logo">📚</div>
+          <h2>Siswa</h2>
+        </div>
+        <nav class="sidebar-nav">
+          <a href="#" data-page="dashboard" class="nav-item active"><span class="nav-icon">🏠</span> Dashboard</a>
+          <a href="#" data-page="catalog" class="nav-item"><span class="nav-icon">📚</span> Katalog Buku</a>
+          <a href="#" data-page="borrowed" class="nav-item"><span class="nav-icon">📖</span> Buku Dipinjam</a>
+          <a href="#" data-page="return" class="nav-item"><span class="nav-icon">↩️</span> Pengembalian</a>
+          <a href="#" data-page="history" class="nav-item"><span class="nav-icon">📜</span> Riwayat</a>
+        </nav>
+        <div class="sidebar-footer">
+          <button id="student-logout" class="btn btn-danger btn-full">Logout</button>
+        </div>
+      </aside>
+      <div class="main-content">
+        <header class="topbar glass-panel">
+          <div class="topbar-left">
+            <button id="student-sidebar-toggle" class="btn btn-icon" aria-label="Toggle sidebar">☰</button>
+            <h1 id="student-page-title">Dashboard</h1>
+          </div>
+          <div class="topbar-right">
+            <div class="user-menu glass-chip" id="student-user-info">👤 Siswa</div>
+          </div>
+        </header>
+        <main id="student-main" class="content-area"></main>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <template id="modal-template">
+    <div class="modal-overlay">
+      <div class="modal glass-card">
+        <div class="modal-header">
+          <h3 id="modal-title"></h3>
+          <button class="modal-close" aria-label="Close modal">×</button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+        <div class="modal-footer" id="modal-footer"></div>
+      </div>
+    </div>
+  </template>
+
+  <button id="theme-toggle" class="btn btn-icon glass-card" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; border-radius: 50%; width: 48px; height: 48px; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); transition: transform var(--transition-fast);" title="Ganti Tema">🌓</button>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

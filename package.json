@@ -1,0 +1,25 @@
+{
+  "name": "sistem-informasi-perpustakaan-sekolah",
+  "version": "1.0.0",
+  "description": "Sistem Informasi Perpustakaan Sekolah Berbasis Localhost dengan UI Glass Liquid / Glassmorphism",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "perpustakaan",
+    "sekolah",
+    "glassmorphism",
+    "library-system",
+    "express",
+    "sqlite"
+  ],
+  "author": "OpenCode",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
