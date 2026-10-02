@@ -14,7 +14,7 @@ Aturan gaya:
 
 | Kunci | Indonesia | English |
 |---|---|---|
-| `app.name` | Takar | Takar |
+| `app.name` | Coffee Brewing | Coffee Brewing |
 | `app.tagline` | Takaran kopi pas, tiap seduhan | The right coffee dose, every brew |
 | `nav.brew` | Seduh | Brew |
 | `nav.recipes` | Resep | Recipes |
@@ -190,7 +190,7 @@ Aturan gaya:
 
 | Kunci | Indonesia | English |
 |---|---|---|
-| `pwa.install` | Pasang Takar di layar utama | Add Takar to your home screen |
+| `pwa.install` | Pasang Coffee Brewing di layar utama | Add Coffee Brewing to your home screen |
 | `pwa.offlineReady` | Siap dipakai tanpa internet | Ready to use offline |
 | `pwa.updateAvailable` | Versi baru tersedia. Muat ulang? | A new version is available. Reload? |
 | `error.invalidNumber` | Masukkan angka yang valid | Enter a valid number |

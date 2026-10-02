@@ -1,4 +1,4 @@
-# ☕ Takar Kopi
+# ☕ Coffee Brewing
 
 Aplikasi web (PWA) untuk menghitung takaran kopi manual brew, espresso, dan metode seduh lainnya, lengkap dengan timer seduh bertahap dan penyimpanan resep.
 
@@ -10,6 +10,7 @@ Aplikasi web (PWA) untuk menghitung takaran kopi manual brew, espresso, dan meto
 |---|---|
 | Platform | PWA (web app yang bisa di-install di HP, jalan offline) |
 | Monetisasi | Gratis total |
+| Nama | Coffee Brewing |
 | Bahasa | Indonesia (default) + Inggris |
 | Backend | Tidak ada untuk MVP, semua data tersimpan di perangkat |
 
