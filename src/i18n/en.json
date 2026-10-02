@@ -167,5 +167,20 @@
   "calc.pourStyle": "Pour style",
   "calc.style.standard": "Standard",
   "calc.style.46": "4:6 (Tetsu Kasuya)",
-  "calc.style.46Hint": "Five equal pours every 45 seconds. The first two (40%) set sweetness vs acidity, the last three (60%) set strength."
+  "calc.style.46Hint": "Five equal pours every 45 seconds. The first two (40%) set sweetness vs acidity, the last three (60%) set strength.",
+  "recipe.edit.title": "Edit recipe",
+  "recipe.notFound": "Recipe not found",
+  "recipe.clearRating": "Clear rating",
+  "recipes.noMatch": "No matching recipes.",
+  "recipes.filter": "Filter by method",
+  "recipes.backup": "Backup",
+  "recipes.imported": "{n} recipes imported.",
+  "recipes.exported": "Backup file downloaded.",
+  "recipes.deleted": "Recipe deleted.",
+  "recipes.count": "{n} recipes",
+  "install.title": "Add to home screen",
+  "install.iosSteps": "Tap Share in Safari, then \"Add to Home Screen\". The app then works without internet.",
+  "install.button": "Install",
+  "install.dismiss": "Not now",
+  "pwa.reload": "Reload"
 }
