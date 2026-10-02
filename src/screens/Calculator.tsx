@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { grindInfo } from '../data/grind'
-import type { BrewMethod, TimeUnit } from '../data/methods'
+import type { BrewMethod, MethodId, TimeUnit } from '../data/methods'
 import type { MessageKey } from '../i18n/I18nProvider'
 import { useI18n } from '../i18n/useI18n'
 import {
@@ -10,9 +11,14 @@ import {
   formatNumber,
   formatRatio,
   formatTime,
+  POUR_STYLE_46,
+  supportsPourStyle,
   type BrewStep,
   type InputMode,
+  type PourStyle,
 } from '../lib/brew'
+import { brewQuery, readBrewParams } from '../lib/brewParams'
+import { stepLabel } from '../lib/stepLabel'
 import { BackHeader, Card, Screen, SectionLabel } from '../components/layout'
 import { Segmented } from '../components/Segmented'
 import { GrindCard } from '../components/GrindCard'
@@ -29,18 +35,31 @@ function parseInput(raw: string): number {
 
 export default function Calculator({ method }: { method: BrewMethod }) {
   const { t } = useI18n()
+  const [search] = useSearchParams()
+  // Coming back from the timer restores the numbers that were brewed.
+  const [initial] = useState(() => readBrewParams(method, search))
   const isEspresso = method.kind === 'espresso'
   const [mode, setMode] = useState<InputMode>('coffee')
-  const [raw, setRaw] = useState(String(method.defaultCoffee))
-  const [ratio, setRatio] = useState(method.ratio.default)
+  const [raw, setRaw] = useState(formatNumber(initial.coffee))
+  const [ratio, setRatio] = useState(initial.ratio)
+  const [style, setStyle] = useState<PourStyle>(initial.style)
 
   const amounts = calcAmounts(method.kind, mode, parseInput(raw), ratio)
-  const steps = brewSchedule(method, amounts.coffee, amounts.hotWater ?? amounts.water)
+  const steps = brewSchedule(method, amounts.coffee, amounts.hotWater ?? amounts.water, style)
+  const timerLink = `/seduh/${method.id}/timer${brewQuery({ coffee: amounts.coffee, ratio, style })}`
+
+  function changeStyle(next: PourStyle) {
+    setStyle(next)
+    if (next === '46') setRatio(POUR_STYLE_46.ratio)
+  }
 
   const coffeeLabel = isEspresso ? t('calc.dose') : t('calc.coffee')
   const waterLabel = isEspresso ? t('calc.yield') : t('calc.water')
   const waterUnit = isEspresso ? t('unit.gram') : t('unit.ml')
-  const timeText = formatTime(method.time, method.time.unit === 'clock' ? '' : t(UNIT_KEYS[method.time.unit]))
+  const timeText =
+    style === '46' && supportsPourStyle(method)
+      ? formatClock(POUR_STYLE_46.end)
+      : formatTime(method.time, method.time.unit === 'clock' ? '' : t(UNIT_KEYS[method.time.unit]))
 
   // Keep the numbers on screen when flipping which side is typed in.
   function switchMode(next: InputMode) {
@@ -152,34 +171,42 @@ export default function Calculator({ method }: { method: BrewMethod }) {
 
         <GrindCard method={method} />
 
-        {steps.length > 0 && <Schedule steps={steps} frenchPress={method.id === 'frenchPress'} />}
+        {supportsPourStyle(method) && (
+          <div className="flex flex-col gap-2">
+            <span className="text-[13px] font-semibold text-muted">{t('calc.pourStyle')}</span>
+            <Segmented<PourStyle>
+              label={t('calc.pourStyle')}
+              value={style}
+              onChange={changeStyle}
+              options={[
+                { value: 'standard', label: t('calc.style.standard') },
+                { value: '46', label: t('calc.style.46') },
+              ]}
+            />
+            {style === '46' && <span className="text-xs leading-relaxed text-muted">{t('calc.style.46Hint')}</span>}
+          </div>
+        )}
+
+        {steps.length > 0 && <Schedule steps={steps} methodId={method.id} />}
 
         <Tip method={method} timeText={timeText} />
+
+        {steps.length > 0 && amounts.coffee > 0 && (
+          <Link
+            to={timerLink}
+            className="flex h-[54px] items-center justify-center rounded-[14px] bg-accent text-base font-semibold text-white no-underline hover:bg-accent-hover"
+          >
+            {t('calc.startBrew')}
+          </Link>
+        )}
       </div>
     </Screen>
   )
 }
 
-function Schedule({ steps, frenchPress }: { steps: BrewStep[]; frenchPress: boolean }) {
+function Schedule({ steps, methodId }: { steps: BrewStep[]; methodId: MethodId }) {
   const { t } = useI18n()
-  const label = (s: BrewStep): string => {
-    switch (s.type) {
-      case 'bloom':
-        return t('timer.bloom')
-      case 'pour':
-        return t('timer.pour', { n: s.n ?? 1 })
-      case 'pourAll':
-        return t('timer.pourAll')
-      case 'stir':
-        return t('timer.stir')
-      case 'steep':
-        return t('timer.steep')
-      case 'press':
-        return frenchPress ? t('timer.plunge') : t('timer.press')
-      case 'drawdown':
-        return t('timer.drawdown')
-    }
-  }
+  const label = (s: BrewStep) => stepLabel(t, s, methodId)
   return (
     <section className="flex flex-col gap-2">
       <SectionLabel>{t('calc.pourSchedule')}</SectionLabel>

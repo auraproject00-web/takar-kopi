@@ -58,6 +58,20 @@ export interface BrewStep {
   n?: number
 }
 
+/** "46" is Tetsu Kasuya's 4:6 method, offered for V60. */
+export type PourStyle = 'standard' | '46'
+
+export const POUR_STYLE_46 = {
+  ratio: 15,
+  /** Five equal pours, 45 s apart: two for taste (40%), three for strength (60%). */
+  pours: [0, 45, 90, 135, 180],
+  end: 210,
+}
+
+export function supportsPourStyle(method: BrewMethod): boolean {
+  return method.id === 'v60'
+}
+
 const POUROVER_TIMING: Partial<Record<MethodId, { pours: number[]; drawdown: number }>> = {
   v60: { pours: [45, 75, 105], drawdown: 135 },
   kalita: { pours: [45, 75, 105], drawdown: 135 },
@@ -69,10 +83,26 @@ const POUROVER_TIMING: Partial<Record<MethodId, { pours: number[]; drawdown: num
  * Pour schedule with cumulative scale targets. `water` is what goes through the
  * coffee bed — for Japanese iced, the hot water only.
  */
-export function brewSchedule(method: BrewMethod, coffee: number, water: number): BrewStep[] {
+export function brewSchedule(
+  method: BrewMethod,
+  coffee: number,
+  water: number,
+  style: PourStyle = 'standard',
+): BrewStep[] {
   const c = clean(coffee)
   const w = Math.round(clean(water))
   if (c === 0 || w === 0) return []
+
+  if (style === '46' && supportsPourStyle(method)) {
+    const count = POUR_STYLE_46.pours.length
+    const steps: BrewStep[] = POUR_STYLE_46.pours.map((atSec, i) => ({
+      type: 'pour',
+      atSec,
+      n: i + 1,
+      targetG: i === count - 1 ? w : Math.round((w * (i + 1)) / count),
+    }))
+    return steps
+  }
 
   switch (method.kind) {
     case 'pourover':
@@ -116,6 +146,13 @@ export function brewSchedule(method: BrewMethod, coffee: number, water: number):
       // Espresso, moka and cold brew have no pour schedule; the screen shows a tip.
       return []
   }
+}
+
+/** When the brew is finished: the method's total time, or the last step if that is later. */
+export function brewEndSec(method: BrewMethod, steps: BrewStep[], style: PourStyle = 'standard'): number {
+  if (style === '46' && supportsPourStyle(method)) return POUR_STYLE_46.end
+  const total = method.time.unit === 'clock' ? method.time.min : 0
+  return Math.max(total, steps.at(-1)?.atSec ?? 0)
 }
 
 export function formatClock(totalSec: number): string {

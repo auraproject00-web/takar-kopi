@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { findMethod, METHODS, type BrewMethod, type MethodId } from '../data/methods'
-import { brewSchedule, calcAmounts, formatClock, formatRatio, formatTime, roundTo } from './brew'
+import { brewEndSec, brewSchedule, calcAmounts, formatClock, formatRatio, formatTime, roundTo } from './brew'
 
 function method(id: MethodId): BrewMethod {
   const m = findMethod(id)
@@ -97,6 +97,41 @@ describe('brewSchedule', () => {
     expect(brewSchedule(method('moka'), 15, 120)).toEqual([])
     expect(brewSchedule(method('coldBrew'), 100, 800)).toEqual([])
     expect(brewSchedule(method('v60'), 0, 0)).toEqual([])
+  })
+})
+
+describe('4:6 pour style', () => {
+  it('splits the water into five equal pours 45 s apart (20 g / 300 ml)', () => {
+    expect(brewSchedule(method('v60'), 20, 300, '46')).toEqual([
+      { type: 'pour', atSec: 0, n: 1, targetG: 60 },
+      { type: 'pour', atSec: 45, n: 2, targetG: 120 },
+      { type: 'pour', atSec: 90, n: 3, targetG: 180 },
+      { type: 'pour', atSec: 135, n: 4, targetG: 240 },
+      { type: 'pour', atSec: 180, n: 5, targetG: 300 },
+    ])
+    expect(brewEndSec(method('v60'), [], '46')).toBe(210)
+  })
+
+  it('puts 40% of the water in the first two pours', () => {
+    const steps = brewSchedule(method('v60'), 17, 255, '46')
+    expect(steps[1]!.targetG).toBe(102)
+    expect(steps.at(-1)!.targetG).toBe(255)
+  })
+
+  it('is ignored for methods other than V60', () => {
+    const chemex = method('chemex')
+    expect(brewSchedule(chemex, 30, 480, '46')).toEqual(brewSchedule(chemex, 30, 480))
+  })
+})
+
+describe('brewEndSec', () => {
+  it('uses the method total time, or the last step if later', () => {
+    const v60 = method('v60')
+    expect(brewEndSec(v60, brewSchedule(v60, 15, 240))).toBe(180)
+    const fp = method('frenchPress')
+    expect(brewEndSec(fp, brewSchedule(fp, 30, 420))).toBe(240)
+    const ap = method('aeropress')
+    expect(brewEndSec(ap, brewSchedule(ap, 15, 210))).toBe(120)
   })
 })
 

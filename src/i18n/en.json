@@ -156,5 +156,16 @@
   "grind.validationNote": "All numbers are starting estimates pending barista validation.",
   "nav.main": "Main navigation",
   "notFound.title": "Page not found",
-  "notFound.back": "Back to home"
+  "notFound.back": "Back to home",
+  "timer.title": "Brew timer",
+  "timer.ready": "Put the server on the scale, tare to 0, then start.",
+  "timer.nextIn": "{step} in {time}",
+  "timer.signals": "Step signals",
+  "timer.sound": "Sound",
+  "timer.vibrate": "Vibrate",
+  "timer.backToCalc": "Back to calculator",
+  "calc.pourStyle": "Pour style",
+  "calc.style.standard": "Standard",
+  "calc.style.46": "4:6 (Tetsu Kasuya)",
+  "calc.style.46Hint": "Five equal pours every 45 seconds. The first two (40%) set sweetness vs acidity, the last three (60%) set strength."
 }
