@@ -15,6 +15,8 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 | TK-03 | Tentukan nama final aplikasi, logo sederhana, dan warna | S | [ ] |
 | TK-04 | Wireframe layar Pengaturan (bahasa, satuan, tema) | S | [ ] |
 | TK-05 | Tulis teks UI dalam Bahasa Indonesia & Inggris (daftar kata/kalimat) | S | [ ] |
+| TK-06 | Wireframe layar Panduan gilingan + bagian grind size di kalkulator | S | [x] |
+| TK-07 | Validasi angka klik grinder ke pemilik grinder / barista | S | [ ] |
 
 **Kriteria selesai Sprint 0:** wireframe disetujui, tabel takaran sudah dicek barista, daftar teks UI dua bahasa siap.
 
@@ -32,6 +34,7 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 | TK-15 | Layar **Kalkulator**: input kopi ↔ air dua arah, slider ratio, parameter | L |
 | TK-16 | Logika khusus: espresso (dose → yield), Japanese iced (60% air panas / 40% es), cold brew (jam) | M |
 | TK-17 | Unit test untuk semua rumus takaran | M |
+| TK-18 | Panduan ukuran gilingan (6 level) + jumlah klik grinder manual (Comandante C40, Timemore C2/C3, Kingrinder K6) di kalkulator & layar Panduan gilingan | M |
 
 **Kriteria:** user bisa pilih metode dan langsung dapat takaran yang benar di HP, dalam 2 bahasa.
 
