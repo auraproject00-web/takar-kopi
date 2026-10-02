@@ -195,3 +195,30 @@ Aturan gaya:
 | `pwa.updateAvailable` | Versi baru tersedia. Muat ulang? | A new version is available. Reload? |
 | `error.invalidNumber` | Masukkan angka yang valid | Enter a valid number |
 | `error.importFailed` | File cadangan tidak bisa dibaca | Couldn't read the backup file |
+
+## Tambahan Sprint 1
+
+| Kunci | Indonesia | English |
+|---|---|---|
+| `common.comingSoon` | Segera hadir | Coming soon |
+| `common.comingSoonBody` | Fitur ini sedang dibangun dan hadir di update berikutnya. | This feature is being built and will arrive in a coming update. |
+| `lang.switch` | Bahasa | Language |
+| `calc.inputFrom` | Hitung dari | Calculate from |
+| `calc.tempRoom` | Dingin / suhu ruang | Cold / room temp |
+| `calc.tempHot` | Air panas | Hot water |
+| `calc.tip.espresso` | Target {time} sejak pompa menyala. Terlalu cepat: giling lebih halus. Terlalu lama: giling lebih kasar. | Aim for {time} from pump start. Too fast: grind finer. Too slow: grind coarser. |
+| `calc.tip.moka` | Isi air panas sampai di bawah katup. Ratakan kopi tanpa ditekan, lalu panaskan dengan api kecil. | Fill hot water just below the valve. Level the coffee without tamping, then heat gently. |
+| `calc.tip.coldBrew` | Rendam di kulkas {time}, saring, lalu encerkan konsentrat 1:1 dengan air atau susu. | Steep in the fridge for {time}, filter, then dilute the concentrate 1:1 with water or milk. |
+| `calc.tip.iced` | Taruh es di server, seduh dengan air panas langsung di atasnya. | Put the ice in the server and brew the hot water straight onto it. |
+| `timer.pourAll` | Tuang semua air | Pour all water |
+| `timer.steep` | Rendam | Steep |
+| `grind.microns` | ±{range} µm | ±{range} µm |
+| `grind.forMethod` | Gilingan untuk {method} | Grind for {method} |
+| `grind.table.method` | Metode | Method |
+| `grind.table.grind` | Gilingan | Grind |
+| `grind.table.clicks` | Klik | Clicks |
+| `grind.pickGrinder` | Pilih grinder | Choose grinder |
+| `grind.validationNote` | Semua angka masih estimasi awal dan akan divalidasi barista. | All numbers are starting estimates pending barista validation. |
+| `nav.main` | Navigasi utama | Main navigation |
+| `notFound.title` | Halaman tidak ditemukan | Page not found |
+| `notFound.back` | Kembali ke beranda | Back to home |
