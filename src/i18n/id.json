@@ -156,5 +156,16 @@
   "grind.validationNote": "Semua angka masih estimasi awal dan akan divalidasi barista.",
   "nav.main": "Navigasi utama",
   "notFound.title": "Halaman tidak ditemukan",
-  "notFound.back": "Kembali ke beranda"
+  "notFound.back": "Kembali ke beranda",
+  "timer.title": "Timer seduh",
+  "timer.ready": "Taruh server di timbangan, tara ke 0, lalu mulai.",
+  "timer.nextIn": "{step} dalam {time}",
+  "timer.signals": "Sinyal tiap langkah",
+  "timer.sound": "Bunyi",
+  "timer.vibrate": "Getar",
+  "timer.backToCalc": "Kembali ke kalkulator",
+  "calc.pourStyle": "Gaya tuang",
+  "calc.style.standard": "Standar",
+  "calc.style.46": "4:6 (Tetsu Kasuya)",
+  "calc.style.46Hint": "5 tuangan sama besar tiap 45 detik. 2 tuangan pertama (40%) atur manis–asam, 3 sisanya (60%) atur kekuatan."
 }

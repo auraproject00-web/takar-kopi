@@ -42,15 +42,15 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 
 ## Sprint 2 — Timer Seduh
 
-| ID | Tiket | Ukuran |
-|---|---|---|
-| TK-20 | Generator jadwal tuang dari resep (bloom + tuangan, target berat kumulatif) | M |
-| TK-21 | Layar **Timer**: waktu berjalan, langkah aktif, target gram, progress bar | L |
-| TK-22 | Kontrol jeda / lanjut / langkah berikut / ulang | M |
-| TK-23 | Bunyi + getar di tiap pergantian langkah (bisa dimatikan) | S |
-| TK-24 | Layar tetap menyala saat timer jalan (Wake Lock API) | S |
-| TK-25 | Timer tetap akurat walau app diminimize (hitung dari jam mulai, bukan interval) | M |
-| TK-26 | Preset V60 metode 4:6 (Tetsu Kasuya) | S |
+| ID | Tiket | Ukuran | Status |
+|---|---|---|---|
+| TK-20 | Generator jadwal tuang dari resep (bloom + tuangan, target berat kumulatif) | M | [x] |
+| TK-21 | Layar **Timer**: waktu berjalan, langkah aktif, target gram, progress bar | L | [x] |
+| TK-22 | Kontrol jeda / lanjut / langkah berikut / ulang | M | [x] |
+| TK-23 | Bunyi + getar di tiap pergantian langkah (bisa dimatikan) | S | [x] |
+| TK-24 | Layar tetap menyala saat timer jalan (Wake Lock API) | S | [x] |
+| TK-25 | Timer tetap akurat walau app diminimize (hitung dari jam mulai, bukan interval) | M | [x] |
+| TK-26 | Preset V60 metode 4:6 (Tetsu Kasuya) | S | [x] |
 
 **Kriteria:** timer akurat ±1 detik setelah 5 menit, termasuk saat pindah aplikasi, di Android & iOS.
 

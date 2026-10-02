@@ -222,3 +222,19 @@ Aturan gaya:
 | `nav.main` | Navigasi utama | Main navigation |
 | `notFound.title` | Halaman tidak ditemukan | Page not found |
 | `notFound.back` | Kembali ke beranda | Back to home |
+
+## Tambahan Sprint 2
+
+| Kunci | Indonesia | English |
+|---|---|---|
+| `timer.title` | Timer seduh | Brew timer |
+| `timer.ready` | Taruh server di timbangan, tara ke 0, lalu mulai. | Put the server on the scale, tare to 0, then start. |
+| `timer.nextIn` | {step} dalam {time} | {step} in {time} |
+| `timer.signals` | Sinyal tiap langkah | Step signals |
+| `timer.sound` | Bunyi | Sound |
+| `timer.vibrate` | Getar | Vibrate |
+| `timer.backToCalc` | Kembali ke kalkulator | Back to calculator |
+| `calc.pourStyle` | Gaya tuang | Pour style |
+| `calc.style.standard` | Standar | Standard |
+| `calc.style.46` | 4:6 (Tetsu Kasuya) | 4:6 (Tetsu Kasuya) |
+| `calc.style.46Hint` | 5 tuangan sama besar tiap 45 detik. 2 tuangan pertama (40%) atur manis–asam, 3 sisanya (60%) atur kekuatan. | Five equal pours every 45 seconds. The first two (40%) set sweetness vs acidity, the last three (60%) set strength. |
