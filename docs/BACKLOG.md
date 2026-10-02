@@ -27,10 +27,10 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 | ID | Tiket | Ukuran | Status |
 |---|---|---|---|
 | TK-10 | Setup proyek: React + TypeScript + Vite + Tailwind, linting, struktur folder | S | [x] |
-| TK-11 | Deploy otomatis ke Vercel dari branch `master` (config `vercel.json` siap; tinggal sambungkan project di Vercel) | S | [~] |
+| TK-11 | Deploy otomatis ke Vercel dari branch `master` (project `coffee-brewing`, preview otomatis per PR) | S | [x] |
 | TK-12 | Sistem i18n (file `id` & `en`), tombol ganti bahasa, simpan pilihan | M | [x] |
 | TK-13 | Data metode seduh (9 metode: ratio, suhu, gilingan, waktu, langkah) | M | [x] |
-| TK-14 | Layar **Pilih metode** (grid metode; kartu "resep terakhir" menyusul di TK-31) | M | [x] |
+| TK-14 | Layar **Pilih metode** (grid metode + kartu resep terakhir) | M | [x] |
 | TK-15 | Layar **Kalkulator**: input kopi ↔ air dua arah, slider ratio, parameter | L | [x] |
 | TK-16 | Logika khusus: espresso (dose → yield), Japanese iced (60% air panas / 40% es), cold brew (jam) | M | [x] |
 | TK-17 | Unit test untuk semua rumus takaran | M | [x] |
@@ -58,15 +58,15 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 
 ## Sprint 3 — Resep & Offline
 
-| ID | Tiket | Ukuran |
-|---|---|---|
-| TK-30 | Database lokal IndexedDB (Dexie.js) + skema `Recipe` | M |
-| TK-31 | Layar **Simpan resep** (nama, biji, roastery, catatan, rating) | M |
-| TK-32 | Layar **Daftar resep**: cari, filter per metode, buka resep ke kalkulator | M |
-| TK-33 | Edit & hapus resep (dengan konfirmasi) | S |
-| TK-34 | PWA: manifest, ikon, service worker, bisa di-install | M |
-| TK-35 | Uji mode pesawat: semua fitur jalan tanpa internet | S |
-| TK-36 | Ekspor / impor resep ke file JSON (cadangan manual) | S |
+| ID | Tiket | Ukuran | Status |
+|---|---|---|---|
+| TK-30 | Database lokal IndexedDB (Dexie.js) + skema `Recipe` | M | [x] |
+| TK-31 | Layar **Simpan resep** (nama, biji, roastery, catatan, rating) | M | [x] |
+| TK-32 | Layar **Daftar resep**: cari, filter per metode, buka resep ke kalkulator | M | [x] |
+| TK-33 | Edit & hapus resep (dengan konfirmasi) | S | [x] |
+| TK-34 | PWA: manifest, ikon, service worker, bisa di-install | M | [x] |
+| TK-35 | Uji mode pesawat: semua fitur jalan tanpa internet | S | [x] |
+| TK-36 | Ekspor / impor resep ke file JSON (cadangan manual) | S | [x] |
 
 **Kriteria:** app bisa di-install di HP, resep tersimpan dan tetap ada setelah app ditutup, semuanya jalan offline.
 

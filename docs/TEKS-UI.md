@@ -238,3 +238,23 @@ Aturan gaya:
 | `calc.style.standard` | Standar | Standard |
 | `calc.style.46` | 4:6 (Tetsu Kasuya) | 4:6 (Tetsu Kasuya) |
 | `calc.style.46Hint` | 5 tuangan sama besar tiap 45 detik. 2 tuangan pertama (40%) atur manis–asam, 3 sisanya (60%) atur kekuatan. | Five equal pours every 45 seconds. The first two (40%) set sweetness vs acidity, the last three (60%) set strength. |
+
+## Tambahan Sprint 3
+
+| Kunci | Indonesia | English |
+|---|---|---|
+| `recipe.edit.title` | Ubah resep | Edit recipe |
+| `recipe.notFound` | Resep tidak ditemukan | Recipe not found |
+| `recipe.clearRating` | Hapus rating | Clear rating |
+| `recipes.noMatch` | Tidak ada resep yang cocok. | No matching recipes. |
+| `recipes.filter` | Filter metode | Filter by method |
+| `recipes.backup` | Cadangan | Backup |
+| `recipes.imported` | {n} resep berhasil diimpor. | {n} recipes imported. |
+| `recipes.exported` | File cadangan sudah diunduh. | Backup file downloaded. |
+| `recipes.deleted` | Resep dihapus. | Recipe deleted. |
+| `recipes.count` | {n} resep | {n} recipes |
+| `install.title` | Pasang di layar utama | Add to home screen |
+| `install.iosSteps` | Tap tombol Bagikan di Safari, lalu pilih "Tambah ke Layar Utama". Aplikasi bisa dipakai tanpa internet. | Tap Share in Safari, then "Add to Home Screen". The app then works without internet. |
+| `install.button` | Pasang | Install |
+| `install.dismiss` | Nanti saja | Not now |
+| `pwa.reload` | Muat ulang | Reload |

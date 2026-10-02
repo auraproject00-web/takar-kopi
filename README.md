@@ -2,7 +2,7 @@
 
 Aplikasi web (PWA) untuk menghitung takaran kopi manual brew, espresso, dan metode seduh lainnya, lengkap dengan timer seduh bertahap dan penyimpanan resep.
 
-> Status: **Sprint 2 selesai**: pilih metode, kalkulator takaran, panduan gilingan, timer seduh bertahap (termasuk 4:6), dua bahasa.
+> Status: **Sprint 3 selesai**: kalkulator takaran, panduan gilingan, timer seduh bertahap (termasuk 4:6), simpan resep, bisa di-install dan dipakai offline, dua bahasa.
 
 ## Menjalankan di komputer
 
@@ -22,6 +22,8 @@ npm run build      # build produksi ke folder dist/
 |---|---|
 | `src/data/` | Data metode seduh, level gilingan, dan klik grinder |
 | `src/lib/brew.ts` | Rumus takaran & jadwal tuang (murni, ada unit test) |
+| `src/lib/timer.ts` | Logika timer seduh berbasis jam |
+| `src/lib/recipes.ts` | Database resep di perangkat (IndexedDB via Dexie) + cadangan JSON |
 | `src/i18n/` | Teks Indonesia (`id.json`) & Inggris (`en.json`) |
 | `src/screens/` | Layar aplikasi |
 | `src/components/` | Komponen UI bersama |

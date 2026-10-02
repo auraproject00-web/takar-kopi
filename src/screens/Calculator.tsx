@@ -46,7 +46,9 @@ export default function Calculator({ method }: { method: BrewMethod }) {
 
   const amounts = calcAmounts(method.kind, mode, parseInput(raw), ratio)
   const steps = brewSchedule(method, amounts.coffee, amounts.hotWater ?? amounts.water, style)
-  const timerLink = `/seduh/${method.id}/timer${brewQuery({ coffee: amounts.coffee, ratio, style })}`
+  const query = brewQuery({ coffee: amounts.coffee, ratio, style })
+  const timerLink = `/seduh/${method.id}/timer${query}`
+  const saveLink = `/resep/baru${query}&metode=${method.id}`
 
   function changeStyle(next: PourStyle) {
     setStyle(next)
@@ -197,6 +199,11 @@ export default function Calculator({ method }: { method: BrewMethod }) {
             className="flex h-[54px] items-center justify-center rounded-[14px] bg-accent text-base font-semibold text-white no-underline hover:bg-accent-hover"
           >
             {t('calc.startBrew')}
+          </Link>
+        )}
+        {amounts.coffee > 0 && (
+          <Link to={saveLink} className="flex min-h-11 items-center justify-center text-[15px] font-semibold text-accent">
+            {t('calc.saveAsRecipe')}
           </Link>
         )}
       </div>

@@ -167,5 +167,20 @@
   "calc.pourStyle": "Gaya tuang",
   "calc.style.standard": "Standar",
   "calc.style.46": "4:6 (Tetsu Kasuya)",
-  "calc.style.46Hint": "5 tuangan sama besar tiap 45 detik. 2 tuangan pertama (40%) atur manis–asam, 3 sisanya (60%) atur kekuatan."
+  "calc.style.46Hint": "5 tuangan sama besar tiap 45 detik. 2 tuangan pertama (40%) atur manis–asam, 3 sisanya (60%) atur kekuatan.",
+  "recipe.edit.title": "Ubah resep",
+  "recipe.notFound": "Resep tidak ditemukan",
+  "recipe.clearRating": "Hapus rating",
+  "recipes.noMatch": "Tidak ada resep yang cocok.",
+  "recipes.filter": "Filter metode",
+  "recipes.backup": "Cadangan",
+  "recipes.imported": "{n} resep berhasil diimpor.",
+  "recipes.exported": "File cadangan sudah diunduh.",
+  "recipes.deleted": "Resep dihapus.",
+  "recipes.count": "{n} resep",
+  "install.title": "Pasang di layar utama",
+  "install.iosSteps": "Tap tombol Bagikan di Safari, lalu pilih \"Tambah ke Layar Utama\". Aplikasi bisa dipakai tanpa internet.",
+  "install.button": "Pasang",
+  "install.dismiss": "Nanti saja",
+  "pwa.reload": "Muat ulang"
 }

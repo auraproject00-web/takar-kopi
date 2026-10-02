@@ -25,6 +25,7 @@ export default function Timer({ method }: { method: BrewMethod }) {
   const [buzzSupported] = useState(canBuzz)
   const flashRef = useRef<HTMLDivElement>(null)
   const calcLink = `/seduh/${method.id}${brewQuery(params)}`
+  const saveLink = `/resep/baru${brewQuery(params)}&metode=${method.id}`
 
   const elapsedSec = timer.elapsedMs / 1000
   const started = timer.status !== 'idle'
@@ -153,6 +154,11 @@ export default function Timer({ method }: { method: BrewMethod }) {
           onReset={timer.reset}
           onNext={() => timer.seek(nextStepMs(steps, elapsedSec, endSec))}
         />
+        {done && (
+          <Link to={saveLink} className="flex h-[54px] items-center justify-center rounded-[14px] bg-[#e08a3c] text-base font-semibold text-ink no-underline">
+            {t('timer.finishSave')}
+          </Link>
+        )}
         <div role="group" aria-label={t('timer.signals')} className="flex justify-center gap-2">
           <Toggle on={sound} onChange={setSound} label={t('timer.sound')} />
           {buzzSupported && <Toggle on={vibrate} onChange={setVibrate} label={t('timer.vibrate')} />}

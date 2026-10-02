@@ -1,9 +1,13 @@
+import { useLiveQuery } from 'dexie-react-hooks'
 import { Link } from 'react-router-dom'
+import { db } from '../lib/recipes'
+import { brewLink, brewSummary } from '../lib/recipeView'
 import { METHODS, type BrewMethod } from '../data/methods'
 import { formatRatio, ICE_SHARE } from '../lib/brew'
 import { useI18n } from '../i18n/useI18n'
 import { Screen } from '../components/layout'
 import { LangToggle } from '../components/LangToggle'
+import { InstallHint } from '../components/InstallHint'
 
 function ratioLabel(method: BrewMethod, iceWord: string): string {
   const { recMin, recMax } = method.ratio
@@ -13,6 +17,7 @@ function ratioLabel(method: BrewMethod, iceWord: string): string {
 
 export default function MethodSelect() {
   const { t } = useI18n()
+  const recent = useLiveQuery(() => db.recipes.orderBy('updatedAt').last())
   return (
     <Screen nav>
       <header className="flex items-center justify-between gap-3 px-5 pt-7 pb-2">
@@ -34,6 +39,22 @@ export default function MethodSelect() {
             </li>
           ))}
         </ul>
+        {recent && (
+          <section className="flex flex-col gap-2">
+            <h2 className="m-0 text-[13px] font-semibold tracking-wide text-muted uppercase">{t('method.recent')}</h2>
+            <Link
+              to={brewLink(recent)}
+              className="flex items-center justify-between gap-3 rounded-[14px] bg-ink px-4 py-3.5 text-white no-underline"
+            >
+              <span className="flex min-w-0 flex-col gap-0.5">
+                <span className="truncate text-[15px] font-semibold">{recent.name}</span>
+                <span className="font-mono text-xs text-line">{brewSummary(t, recent)}</span>
+              </span>
+              <span className="shrink-0 text-sm font-semibold text-accent-soft">{t('method.brewAgain')}</span>
+            </Link>
+          </section>
+        )}
+        <InstallHint />
         <Link to="/gilingan" className="flex min-h-11 items-center text-sm font-semibold text-accent">
           {t('grind.guide')}
         </Link>
