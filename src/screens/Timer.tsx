@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useSearchParams } from 'react-router-dom'
 import type { BrewMethod } from '../data/methods'
 import { useI18n } from '../i18n/useI18n'
 import { brewEndSec, brewSchedule, calcAmounts, formatClock, formatNumber } from '../lib/brew'
 import { brewQuery, readBrewParams } from '../lib/brewParams'
-import { beep, buzz, unlockAudio } from '../lib/cues'
+import { beep, buzz, canBuzz, unlockAudio } from '../lib/cues'
 import { stepLabel } from '../lib/stepLabel'
 import { currentStepIndex, nextStepMs } from '../lib/timer'
 import { useBrewTimer } from '../lib/useBrewTimer'
@@ -22,6 +22,8 @@ export default function Timer({ method }: { method: BrewMethod }) {
   const timer = useBrewTimer(endSec * 1000)
   const [sound, setSound] = usePersistentState('cb.sound', true)
   const [vibrate, setVibrate] = usePersistentState('cb.vibrate', true)
+  const [buzzSupported] = useState(canBuzz)
+  const flashRef = useRef<HTMLDivElement>(null)
   const calcLink = `/seduh/${method.id}${brewQuery(params)}`
 
   const elapsedSec = timer.elapsedMs / 1000
@@ -46,8 +48,10 @@ export default function Timer({ method }: { method: BrewMethod }) {
     lastSignalled.current = key
     if (isFirst && !done) return // The start tap is feedback enough.
     if (sound) beep(done ? 3 : 1)
-    if (vibrate) buzz(done ? [200, 100, 200] : 200)
-  }, [index, done, timer.status, steps.length, sound, vibrate])
+    if (vibrate && buzzSupported) buzz(done ? [200, 100, 200] : 200)
+    // A screen flash works everywhere, including iPhones with the ringer off.
+    flashRef.current?.animate?.([{ opacity: 0.45 }, { opacity: 0 }], { duration: done ? 1200 : 700, easing: 'ease-out' })
+  }, [index, done, timer.status, steps.length, sound, vibrate, buzzSupported])
 
   if (steps.length === 0) return <Navigate to={calcLink} replace />
 
@@ -56,6 +60,7 @@ export default function Timer({ method }: { method: BrewMethod }) {
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-ink text-white">
+      <div ref={flashRef} aria-hidden="true" className="pointer-events-none fixed inset-0 z-10 bg-[#e08a3c] opacity-0" />
       <header className="flex items-center justify-between py-5 pr-3 pl-5">
         <div className="flex flex-col gap-0.5">
           <h1 className="m-0 font-display text-xl font-bold">{t(method.nameKey)}</h1>
@@ -150,7 +155,7 @@ export default function Timer({ method }: { method: BrewMethod }) {
         />
         <div role="group" aria-label={t('timer.signals')} className="flex justify-center gap-2">
           <Toggle on={sound} onChange={setSound} label={t('timer.sound')} />
-          <Toggle on={vibrate} onChange={setVibrate} label={t('timer.vibrate')} />
+          {buzzSupported && <Toggle on={vibrate} onChange={setVibrate} label={t('timer.vibrate')} />}
         </div>
       </div>
     </div>
