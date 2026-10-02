@@ -34,7 +34,7 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 | TK-15 | Layar **Kalkulator**: input kopi ↔ air dua arah, slider ratio, parameter | L |
 | TK-16 | Logika khusus: espresso (dose → yield), Japanese iced (60% air panas / 40% es), cold brew (jam) | M |
 | TK-17 | Unit test untuk semua rumus takaran | M |
-| TK-18 | Panduan ukuran gilingan (6 level) + jumlah klik grinder manual (Comandante C40, Timemore C2/C3, Kingrinder K6) di kalkulator & layar Panduan gilingan | M |
+| TK-18 | Panduan ukuran gilingan (6 level) + jumlah klik grinder manual (Comandante C40, Timemore C2/C3, Kingrinder K6, 1Zpresso Q2, 1Zpresso JX-Pro, Hario Skerton Pro) + opsi "grinder lain" dengan klik isi sendiri | M |
 
 **Kriteria:** user bisa pilih metode dan langsung dapat takaran yang benar di HP, dalam 2 bahasa.
 
