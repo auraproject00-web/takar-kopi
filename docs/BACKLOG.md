@@ -13,8 +13,8 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 | TK-01 | Wireframe 5 layar utama (pilih metode, kalkulator, timer, simpan resep, daftar resep) | M | [x] |
 | TK-02 | Validasi tabel takaran default ke 2–3 barista / home brewer | M | [ ] |
 | TK-03 | Tentukan nama final aplikasi, logo sederhana, dan warna | S | [ ] |
-| TK-04 | Wireframe layar Pengaturan (bahasa, satuan, tema) | S | [ ] |
-| TK-05 | Tulis teks UI dalam Bahasa Indonesia & Inggris (daftar kata/kalimat) | S | [ ] |
+| TK-04 | Wireframe layar Pengaturan (bahasa, satuan, tema) | S | [x] |
+| TK-05 | Tulis teks UI dalam Bahasa Indonesia & Inggris → `docs/TEKS-UI.md` | S | [x] |
 | TK-06 | Wireframe layar Panduan gilingan + bagian grind size di kalkulator | S | [x] |
 | TK-07 | Validasi angka klik grinder ke pemilik grinder / barista | S | [ ] |
 
