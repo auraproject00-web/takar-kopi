@@ -24,17 +24,17 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 
 ## Sprint 1 — Fondasi & Kalkulator
 
-| ID | Tiket | Ukuran |
-|---|---|---|
-| TK-10 | Setup proyek: React + TypeScript + Vite + Tailwind, linting, struktur folder | S |
-| TK-11 | Deploy otomatis ke Vercel dari branch `master` | S |
-| TK-12 | Sistem i18n (file `id` & `en`), tombol ganti bahasa, simpan pilihan | M |
-| TK-13 | Data metode seduh (9 metode: ratio, suhu, gilingan, waktu, langkah) | M |
-| TK-14 | Layar **Pilih metode** (grid metode + resep terakhir) | M |
-| TK-15 | Layar **Kalkulator**: input kopi ↔ air dua arah, slider ratio, parameter | L |
-| TK-16 | Logika khusus: espresso (dose → yield), Japanese iced (60% air panas / 40% es), cold brew (jam) | M |
-| TK-17 | Unit test untuk semua rumus takaran | M |
-| TK-18 | Panduan ukuran gilingan (6 level) + jumlah klik grinder manual (Comandante C40, Timemore C2/C3, Kingrinder K6, 1Zpresso Q2, 1Zpresso JX-Pro, Hario Skerton Pro) + opsi "grinder lain" dengan klik isi sendiri | M |
+| ID | Tiket | Ukuran | Status |
+|---|---|---|---|
+| TK-10 | Setup proyek: React + TypeScript + Vite + Tailwind, linting, struktur folder | S | [x] |
+| TK-11 | Deploy otomatis ke Vercel dari branch `master` (config `vercel.json` siap; tinggal sambungkan project di Vercel) | S | [~] |
+| TK-12 | Sistem i18n (file `id` & `en`), tombol ganti bahasa, simpan pilihan | M | [x] |
+| TK-13 | Data metode seduh (9 metode: ratio, suhu, gilingan, waktu, langkah) | M | [x] |
+| TK-14 | Layar **Pilih metode** (grid metode; kartu "resep terakhir" menyusul di TK-31) | M | [x] |
+| TK-15 | Layar **Kalkulator**: input kopi ↔ air dua arah, slider ratio, parameter | L | [x] |
+| TK-16 | Logika khusus: espresso (dose → yield), Japanese iced (60% air panas / 40% es), cold brew (jam) | M | [x] |
+| TK-17 | Unit test untuk semua rumus takaran | M | [x] |
+| TK-18 | Panduan ukuran gilingan (6 level) + jumlah klik grinder manual (Comandante C40, Timemore C2/C3, Kingrinder K6, 1Zpresso Q2, 1Zpresso JX-Pro, Hario Skerton Pro) + opsi "grinder lain" dengan klik isi sendiri | M | [x] |
 
 **Kriteria:** user bisa pilih metode dan langsung dapat takaran yang benar di HP, dalam 2 bahasa.
 
