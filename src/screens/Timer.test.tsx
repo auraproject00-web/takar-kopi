@@ -89,6 +89,13 @@ describe('brew timer', () => {
     expect(localStorage.getItem('cb.vibrate')).toBe('false')
   })
 
+  it('hides the vibrate toggle where the phone cannot vibrate (iPhone before iOS 18)', () => {
+    Reflect.deleteProperty(navigator, 'vibrate')
+    renderAt('/seduh/v60/timer?kopi=15&rasio=16')
+    expect(screen.queryByRole('button', { name: 'Getar' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Bunyi' })).toBeInTheDocument()
+  })
+
   it('runs the 4:6 recipe with five pours ending at 3:30', async () => {
     const user = setup()
     renderAt('/seduh/v60/timer?kopi=20&rasio=15&gaya=46')
