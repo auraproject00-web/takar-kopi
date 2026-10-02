@@ -1,4 +1,4 @@
-# Backlog Takar Kopi
+# Backlog Coffee Brewing
 
 Ukuran tiket: **S** = ≤ ½ hari · **M** = 1–2 hari · **L** = 3+ hari
 
@@ -12,7 +12,7 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 |---|---|---|---|
 | TK-01 | Wireframe 5 layar utama (pilih metode, kalkulator, timer, simpan resep, daftar resep) | M | [x] |
 | TK-02 | Validasi tabel takaran default ke 2–3 barista / home brewer | M | [ ] |
-| TK-03 | Tentukan nama final aplikasi, logo sederhana, dan warna | S | [ ] |
+| TK-03 | Tentukan nama final aplikasi, logo sederhana, dan warna → nama **Coffee Brewing**, warna tetap (oranye gelap #9A4A0A, tinta #1C1B1A, latar #F4F3F1). Logo menyusul | S | [x] |
 | TK-04 | Wireframe layar Pengaturan (bahasa, satuan, tema) | S | [x] |
 | TK-05 | Tulis teks UI dalam Bahasa Indonesia & Inggris → `docs/TEKS-UI.md` | S | [x] |
 | TK-06 | Wireframe layar Panduan gilingan + bagian grind size di kalkulator | S | [x] |
