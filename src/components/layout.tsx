@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useI18n } from '../i18n/useI18n'
-import { BookIcon, ChevronLeftIcon, CupIcon, SlidersIcon } from './icons'
+import { BeanIcon, BookIcon, ChevronLeftIcon, CupIcon, SlidersIcon } from './icons'
 
 /** Phone-width column, centered on larger screens. */
 export function Screen({ children, nav = false }: { children: ReactNode; nav?: boolean }) {
@@ -30,12 +30,13 @@ function BottomNav() {
   const items = [
     { to: '/', label: t('nav.brew'), icon: <CupIcon />, end: true },
     { to: '/resep', label: t('nav.recipes'), icon: <BookIcon />, end: false },
+    { to: '/beans', label: t('nav.beans'), icon: <BeanIcon />, end: false },
     { to: '/pengaturan', label: t('nav.settings'), icon: <SlidersIcon />, end: false },
   ]
   return (
     <nav
       aria-label={t('nav.main')}
-      className="fixed inset-x-0 bottom-0 mx-auto grid h-[72px] w-full max-w-md grid-cols-3 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)]"
+      className="fixed inset-x-0 bottom-0 mx-auto grid h-[72px] w-full max-w-md grid-cols-4 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)]"
     >
       {items.map((item) => (
         <NavLink

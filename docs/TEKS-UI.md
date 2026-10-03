@@ -321,3 +321,48 @@ Aturan gaya:
 | `feedback.queued` | Kamu sedang offline. Masukan disimpan dan akan terkirim otomatis saat online. | You're offline. Your feedback is saved and will send automatically when you're back online. |
 | `feedback.empty` | Tulis saranmu dulu, ya. | Please write your feedback first. |
 | `feedback.another` | Kirim masukan lain | Send another |
+
+## Tambahan: panduan beans
+
+| Kunci | Indonesia | English |
+|---|---|---|
+| `nav.beans` | Beans | Beans |
+| `beans.title` | Panduan beans | Bean guide |
+| `beans.intro` | Jenis kopi, proses pasca-panen, dan tingkat sangrai mengubah suhu air yang pas. Pilih tingkat sangrai beans-mu. | Coffee species, processing and roast level all change the right water temperature. Pick your beans' roast level. |
+| `beans.roast.label` | Tingkat sangrai | Roast level |
+| `beans.roast.light` | Light | Light |
+| `beans.roast.medium` | Medium | Medium |
+| `beans.roast.dark` | Dark | Dark |
+| `beans.roast.lightHint` | Biji padat dan lebih sulit diekstrak, jadi pakai air lebih panas. | Dense beans that are harder to extract, so use hotter water. |
+| `beans.roast.mediumHint` | Seimbang. Mulai dari tengah, lalu sesuaikan dengan rasa. | Balanced. Start in the middle, then adjust to taste. |
+| `beans.roast.darkHint` | Biji rapuh dan mudah pahit, jadi turunkan suhunya. | Brittle beans that turn bitter easily, so go cooler. |
+| `beans.species` | Jenis kopi | Coffee species |
+| `beans.process` | Proses | Process |
+| `beans.temp` | Suhu air | Water temp |
+| `beans.flavor` | Rasa | Flavour |
+| `beans.arabica` | Arabika | Arabica |
+| `beans.arabica.desc` | Tumbuh di dataran tinggi. Kopi utama untuk manual brew. | Grown at high altitude. The go-to coffee for manual brewing. |
+| `beans.arabica.flavor` | Asam segar, manis, aroma buah atau bunga | Bright acidity, sweet, fruity or floral aroma |
+| `beans.robusta` | Robusta | Robusta |
+| `beans.robusta.desc` | Kafein hampir dua kali arabika. Cocok untuk espresso, kopi susu, dan tubruk. | Nearly twice the caffeine of arabica. Great for espresso, milk coffee and tubruk. |
+| `beans.robusta.flavor` | Pahit tebal, cokelat, kacang, body berat | Bold bitterness, chocolate, nutty, heavy body |
+| `beans.liberica` | Liberika | Liberica |
+| `beans.liberica.desc` | Biji besar dan tidak rata, banyak dari Jambi dan Kalimantan. | Large, uneven beans, mostly from Jambi and Kalimantan. |
+| `beans.liberica.flavor` | Aroma nangka, smoky, sedikit kayu | Jackfruit aroma, smoky, a little woody |
+| `beans.washed` | Washed (full wash) | Washed (full wash) |
+| `beans.washed.desc` | Kulit dan lendir buah dicuci bersih sebelum dijemur. | Skin and fruit mucilage are washed off before drying. |
+| `beans.washed.flavor` | Bersih, cerah, asam jelas | Clean, bright, distinct acidity |
+| `beans.natural` | Natural (dry process) | Natural (dry process) |
+| `beans.natural.desc` | Buah kopi dijemur utuh bersama kulitnya. | Whole coffee cherries are dried with the skin on. |
+| `beans.natural.flavor` | Manis buah, berry, kadang seperti wine | Fruity sweetness, berry, sometimes winey |
+| `beans.honey` | Honey | Honey |
+| `beans.honey.desc` | Kulit dikupas, sebagian lendir dibiarkan saat dijemur (yellow, red, black). | Skin removed, some mucilage left on while drying (yellow, red, black). |
+| `beans.honey.flavor` | Manis seperti madu, body sedang | Honey-like sweetness, medium body |
+| `beans.wetHulled` | Giling basah (wet-hulled) | Wet-hulled (giling basah) |
+| `beans.wetHulled.desc` | Kulit tanduk dikupas saat biji masih basah. Khas Gayo, Sumatra, dan Toraja. | Parchment is hulled while the beans are still wet. Typical of Gayo, Sumatra and Toraja. |
+| `beans.wetHulled.flavor` | Earthy, rempah, body tebal, asam rendah | Earthy, spicy, heavy body, low acidity |
+| `beans.anaerobic` | Anaerob | Anaerobic |
+| `beans.anaerobic.desc` | Difermentasi dalam wadah tertutup tanpa oksigen sebelum dijemur. | Fermented in sealed tanks without oxygen before drying. |
+| `beans.anaerobic.flavor` | Fermentasi kuat, buah tropis, boozy | Intense ferment, tropical fruit, boozy |
+| `beans.processNote` | Suhu proses dihitung untuk arabika. | Process temperatures assume arabica. |
+| `beans.note` | Untuk seduh manual panas. Espresso tetap di sekitar {esp}, dan cold brew pakai air suhu ruang. Terlalu asam? Naikkan 1–2°. Terlalu pahit? Turunkan 1–2°. | For hot manual brews. Espresso stays around {esp}, and cold brew uses room-temperature water. Too sour? Go up 1–2°. Too bitter? Go down 1–2°. |

@@ -10,6 +10,7 @@ import RecipeForm from './screens/RecipeForm'
 import { getRecipe } from './lib/recipes'
 import { useApplyTheme } from './lib/theme'
 import Settings from './screens/Settings'
+import BeanGuide from './screens/BeanGuide'
 import Onboarding, { ONBOARDED_KEY } from './screens/Onboarding'
 import { usePersistentState } from './lib/usePersistentState'
 import NotFound from './screens/NotFound'
@@ -63,6 +64,7 @@ export default function App() {
       <Route path="/resep" element={<RecipeList />} />
       <Route path="/resep/baru" element={<NewRecipeRoute />} />
       <Route path="/resep/:recipeId/ubah" element={<EditRecipeRoute />} />
+      <Route path="/beans" element={<BeanGuide />} />
       <Route path="/pengaturan" element={<Settings />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
