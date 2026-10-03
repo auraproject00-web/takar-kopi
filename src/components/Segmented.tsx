@@ -1,6 +1,8 @@
+import type { ReactNode } from 'react'
+
 interface Option<T extends string> {
   value: T
-  label: string
+  label: ReactNode
 }
 
 /** Pill group of toggle buttons; one is always pressed. */
