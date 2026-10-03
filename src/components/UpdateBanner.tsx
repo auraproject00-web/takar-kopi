@@ -13,14 +13,14 @@ export function UpdateBanner() {
   return (
     <div
       role="status"
-      className="fixed inset-x-0 top-0 z-20 mx-auto flex w-full max-w-md items-center justify-between gap-3 bg-ink px-4 py-3 text-sm text-white"
+      className="fixed inset-x-0 top-0 z-20 mx-auto flex w-full max-w-md items-center justify-between gap-3 bg-inverse px-4 py-3 text-sm text-on-inverse"
     >
       <span>{t('pwa.updateAvailable')}</span>
       <span className="flex shrink-0 gap-1">
-        <button type="button" onClick={() => setNeedRefresh(false)} className="min-h-11 px-2 font-semibold text-field">
+        <button type="button" onClick={() => setNeedRefresh(false)} className="min-h-11 px-2 font-semibold text-on-inverse-muted">
           {t('common.close')}
         </button>
-        <button type="button" onClick={() => void updateServiceWorker(true)} className="min-h-11 rounded-lg bg-accent-soft px-3 font-semibold text-ink">
+        <button type="button" onClick={() => void updateServiceWorker(true)} className="min-h-11 rounded-lg bg-accent-soft px-3 font-semibold text-[#1c1b1a]">
           {t('pwa.reload')}
         </button>
       </span>

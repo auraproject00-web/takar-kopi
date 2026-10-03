@@ -8,7 +8,10 @@ import Timer from './screens/Timer'
 import RecipeList from './screens/RecipeList'
 import RecipeForm from './screens/RecipeForm'
 import { getRecipe } from './lib/recipes'
-import ComingSoon from './screens/ComingSoon'
+import { useApplyTheme } from './lib/theme'
+import Settings from './screens/Settings'
+import Onboarding, { ONBOARDED_KEY } from './screens/Onboarding'
+import { usePersistentState } from './lib/usePersistentState'
 import NotFound from './screens/NotFound'
 
 function CalculatorRoute() {
@@ -43,17 +46,24 @@ function EditRecipeRoute() {
   return <RecipeForm key={recipe.id} method={method} search={new URLSearchParams()} existing={recipe} />
 }
 
+function HomeRoute() {
+  const [onboarded] = usePersistentState(ONBOARDED_KEY, false)
+  return onboarded ? <MethodSelect /> : <Navigate to="/pengenalan" replace />
+}
+
 export default function App() {
+  useApplyTheme()
   return (
     <Routes>
-      <Route path="/" element={<MethodSelect />} />
+      <Route path="/" element={<HomeRoute />} />
+      <Route path="/pengenalan" element={<Onboarding />} />
       <Route path="/seduh/:methodId" element={<CalculatorRoute />} />
       <Route path="/seduh/:methodId/timer" element={<TimerRoute />} />
       <Route path="/gilingan" element={<GrindGuide />} />
       <Route path="/resep" element={<RecipeList />} />
       <Route path="/resep/baru" element={<NewRecipeRoute />} />
       <Route path="/resep/:recipeId/ubah" element={<EditRecipeRoute />} />
-      <Route path="/pengaturan" element={<ComingSoon titleKey="settings.title" />} />
+      <Route path="/pengaturan" element={<Settings />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

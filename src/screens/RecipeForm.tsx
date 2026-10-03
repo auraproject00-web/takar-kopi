@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { BrewMethod } from '../data/methods'
 import { useI18n } from '../i18n/useI18n'
+import { useUnitFormat } from '../lib/units'
 import { readBrewParams } from '../lib/brewParams'
 import { addRecipe, updateRecipe, type Recipe, type RecipeInput } from '../lib/recipes'
 import { brewLink, brewSummary } from '../lib/recipeView'
@@ -9,7 +10,7 @@ import { BackHeader, Screen } from '../components/layout'
 import { RatingInput } from '../components/Stars'
 
 const fieldClass =
-  'h-12 rounded-xl border border-field bg-surface px-3.5 text-base font-normal text-ink placeholder:text-[#8c877f]'
+  'h-12 rounded-xl border border-field bg-surface px-3.5 text-base font-normal text-ink placeholder:text-faint'
 
 /** New recipe (from calculator/timer numbers in the URL) or editing an existing one. */
 export default function RecipeForm({
@@ -22,6 +23,7 @@ export default function RecipeForm({
   existing?: Recipe
 }) {
   const { t } = useI18n()
+  const u = useUnitFormat()
   const navigate = useNavigate()
   const [brew] = useState(() =>
     existing
@@ -53,8 +55,8 @@ export default function RecipeForm({
     navigate('/resep', { state: { flash: 'recipe.saved' } })
   }
 
-  const chips = [t(method.nameKey), ...brewSummary(t, { methodId: method.id, ...brew }).split(' · ')]
-  if (method.tempC !== null) chips.push(`${method.tempC}${t('unit.celsius')}`)
+  const chips = [t(method.nameKey), ...brewSummary({ methodId: method.id, ...brew }, u).split(' · ')]
+  if (method.tempC !== null) chips.push(u.fmtTemp(method.tempC))
 
   return (
     <Screen>
@@ -65,7 +67,7 @@ export default function RecipeForm({
             <li
               key={i}
               className={`rounded-full px-2.5 py-1.5 text-[13px] ${
-                i === 0 ? 'bg-ink font-semibold text-white' : 'border border-line bg-surface font-mono'
+                i === 0 ? 'bg-inverse font-semibold text-on-inverse' : 'border border-line bg-surface font-mono'
               }`}
             >
               {c}
@@ -106,7 +108,7 @@ export default function RecipeForm({
         <button
           type="submit"
           disabled={saving}
-          className="mt-auto h-[54px] rounded-[14px] bg-accent text-base font-semibold text-white hover:bg-accent-hover disabled:opacity-60"
+          className="mt-auto h-[54px] rounded-[14px] bg-accent text-base font-semibold text-on-accent hover:bg-accent-hover disabled:opacity-60"
         >
           {t('common.save')}
         </button>

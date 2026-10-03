@@ -1,17 +1,27 @@
 @import 'tailwindcss';
 
+/*
+ * Colors are semantic tokens; the dark theme only swaps their values.
+ * "inverse" is the high-contrast card (dark in light mode), "on-*" is text drawn on top of a fill.
+ */
 @theme {
   --color-bg: #f4f3f1;
   --color-surface: #ffffff;
   --color-ink: #1c1b1a;
   --color-muted: #5e5a55;
+  --color-faint: #78736c;
   --color-line: #d9d6d1;
   --color-line-soft: #eceae6;
-  --color-field: #bdb8b1;
+  --color-field: #8f8982;
   --color-track: #e4e1dc;
   --color-accent: #9a4a0a;
   --color-accent-hover: #7a3a06;
   --color-accent-soft: #f2b27a;
+  --color-on-accent: #ffffff;
+  --color-inverse: #1c1b1a;
+  --color-on-inverse: #ffffff;
+  --color-on-inverse-muted: #d9d6d1;
+  --color-on-inverse-accent: #f2b27a;
 
   --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
@@ -19,6 +29,57 @@
 }
 
 @layer base {
+  /* Dark values, used when chosen in Settings or when the phone is in dark mode and no theme is forced. */
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --color-bg: #141210;
+    --color-surface: #1f1c1a;
+    --color-ink: #f1eee9;
+    --color-muted: #aba59d;
+    --color-faint: #8f8981;
+    --color-line: #3a3632;
+    --color-line-soft: #2b2825;
+    --color-field: #7d766e;
+    --color-track: #2c2926;
+    --color-accent: #e8913f;
+    --color-accent-hover: #f2a35a;
+    --color-accent-soft: #f2b27a;
+    --color-on-accent: #1c1b1a;
+    --color-inverse: #ebe7e1;
+    --color-on-inverse: #1c1b1a;
+    --color-on-inverse-muted: #57524c;
+    --color-on-inverse-accent: #8a4209;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      color-scheme: dark;
+      --color-bg: #141210;
+      --color-surface: #1f1c1a;
+      --color-ink: #f1eee9;
+      --color-muted: #aba59d;
+      --color-faint: #8f8981;
+      --color-line: #3a3632;
+      --color-line-soft: #2b2825;
+      --color-field: #7d766e;
+      --color-track: #2c2926;
+      --color-accent: #e8913f;
+      --color-accent-hover: #f2a35a;
+      --color-accent-soft: #f2b27a;
+      --color-on-accent: #1c1b1a;
+      --color-inverse: #ebe7e1;
+      --color-on-inverse: #1c1b1a;
+      --color-on-inverse-muted: #57524c;
+      --color-on-inverse-accent: #8a4209;
+    }
+  }
+  /* The brew timer is always dark, so it pins the light values its own palette was built on. */
+  .light-tokens {
+    --color-ink: #1c1b1a;
+    --color-muted: #5e5a55;
+    --color-field: #bdb8b1;
+    --color-accent-soft: #f2b27a;
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
   }
@@ -34,5 +95,12 @@
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+    }
   }
 }

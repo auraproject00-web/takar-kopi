@@ -74,15 +74,15 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 
 ## Sprint 4 — Polish & Beta
 
-| ID | Tiket | Ukuran |
-|---|---|---|
-| TK-40 | Layar **Pengaturan**: bahasa, satuan (g/oz, ml/fl oz, °C/°F), tema | M |
-| TK-41 | Dark mode | S |
-| TK-42 | Aksesibilitas: kontras warna, ukuran tombol ≥ 44px, label pembaca layar | S |
-| TK-43 | Layar onboarding singkat (3 slide) untuk pemula | S |
-| TK-44 | Rekrut 10–20 beta tester + form masukan | S |
-| TK-45 | Perbaikan bug dari hasil beta | L |
-| TK-46 | Rilis v1.0 | S |
+| ID | Tiket | Ukuran | Status |
+|---|---|---|---|
+| TK-40 | Layar **Pengaturan**: bahasa, satuan (g/oz, ml/fl oz, °C/°F), tema | M | [x] |
+| TK-41 | Dark mode | S | [x] |
+| TK-42 | Aksesibilitas: kontras warna, ukuran tombol ≥ 44px, label pembaca layar | S | [x] |
+| TK-43 | Layar onboarding singkat (3 slide) untuk pemula | S | [x] |
+| TK-44 | Rekrut 10–20 beta tester + form masukan (Google Form sudah tertaut di Pengaturan → Kirim masukan) | S | [ ] |
+| TK-45 | Perbaikan bug dari hasil beta | L | [ ] |
+| TK-46 | Rilis v1.0 | S | [ ] |
 
 **Kriteria:** ≥ 20 beta tester, ≥ 60% menyimpan minimal 1 resep, tidak ada bug kritis.
 

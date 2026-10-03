@@ -22,7 +22,7 @@ export function InstallHint() {
       )}
       <div className="flex gap-2">
         {prompt && (
-          <button type="button" onClick={() => void promptInstall()} className="min-h-11 rounded-xl bg-accent px-4 text-sm font-semibold text-white">
+          <button type="button" onClick={() => void promptInstall()} className="min-h-11 rounded-xl bg-accent px-4 text-sm font-semibold text-on-accent">
             {t('install.button')}
           </button>
         )}

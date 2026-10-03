@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { findMethod, METHODS, type MethodId } from '../data/methods'
 import type { MessageKey } from '../i18n/I18nProvider'
 import { useI18n } from '../i18n/useI18n'
+import { useUnitFormat } from '../lib/units'
 import { BackupError, deleteRecipe, exportBackup, importBackup, listRecipes, matchesSearch } from '../lib/recipes'
 import { brewLink, brewSummary } from '../lib/recipeView'
 import { Card, Screen, SectionLabel } from '../components/layout'
@@ -14,6 +15,7 @@ type Filter = MethodId | 'all'
 
 export default function RecipeList() {
   const { t } = useI18n()
+  const u = useUnitFormat()
   const location = useLocation()
   const recipes = useLiveQuery(listRecipes)
   const [query, setQuery] = useState('')
@@ -69,7 +71,7 @@ export default function RecipeList() {
 
   const chipClass = (on: boolean) =>
     `h-9 shrink-0 rounded-full px-3.5 text-[13px] font-semibold whitespace-nowrap ${
-      on ? 'bg-ink text-white' : 'border border-field bg-surface text-ink'
+      on ? 'bg-inverse text-on-inverse' : 'border border-field bg-surface text-ink'
     }`
 
   return (
@@ -140,7 +142,7 @@ export default function RecipeList() {
                         {method && t(method.nameKey)}
                       </span>
                     </span>
-                    <span className="font-mono text-[13px] text-muted">{brewSummary(t, r)}</span>
+                    <span className="font-mono text-[13px] text-muted">{brewSummary(r, u)}</span>
                     {(r.bean || r.roastery || r.rating > 0) && (
                       <span className="flex items-center justify-between gap-2 text-[13px] text-muted">
                         <span>{[r.bean, r.roastery].filter(Boolean).join(' · ')}</span>
