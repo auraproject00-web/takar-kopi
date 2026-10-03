@@ -415,11 +415,17 @@ Aturan gaya:
 | `search.title` | Cari biji kopi | Find coffee beans |
 | `search.label` | Cari origin, daerah, atau varietas | Search by origin, region or variety |
 | `search.placeholder` | Mis. Gayo, Kintamani, Ethiopia… | E.g. Gayo, Kintamani, Ethiopia… |
-| `search.hint` | Dari database bawaan, bisa dipakai offline. | From the built-in database, works offline. |
+| `search.hint` | {n} origin di database bawaan, bisa dipakai offline. | {n} origins in the built-in database, works offline. |
 | `search.results` | {n} hasil | {n} results |
 | `search.none` | "{q}" belum ada di database kami. Coba nama daerah, negara, atau varietasnya. | "{q}" isn't in our database yet. Try the region, country or variety. |
-| `search.indonesia` | Indonesia | Indonesia |
+| `island.sumatra` | Sumatra | Sumatra |
+| `island.java` | Jawa | Java |
+| `island.baliNusa` | Bali & Nusa Tenggara | Bali & Nusa Tenggara |
+| `island.sulawesi` | Sulawesi | Sulawesi |
+| `island.kalimantan` | Kalimantan | Kalimantan |
+| `island.papua` | Papua | Papua |
 | `search.world` | Mancanegara | Rest of the world |
+| `search.jump` | Lompat ke | Jump to |
 | `origin.country` | Negara | Country |
 | `origin.region` | Wilayah | Region |
 | `origin.altitude` | Ketinggian | Altitude |

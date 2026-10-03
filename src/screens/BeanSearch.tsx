@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { PROCESSES, SPECIES } from '../data/beans'
-import { flavorName, ORIGINS, searchOrigins, type Origin } from '../data/origins'
+import { flavorName, ISLANDS, ORIGINS, searchOrigins, type Origin } from '../data/origins'
 import { useI18n } from '../i18n/useI18n'
 import { BackHeader, Card, Screen, SectionLabel } from '../components/layout'
 
@@ -36,9 +36,10 @@ export default function BeanSearch() {
   const [params, setParams] = useSearchParams()
   const query = params.get('q') ?? ''
   const results = searchOrigins(query)
+  // Browsing: Indonesia by island, then the rest of the world.
   const groups = [
-    { label: t('search.indonesia'), list: ORIGINS.filter((o) => o.country.en === 'Indonesia') },
-    { label: t('search.world'), list: ORIGINS.filter((o) => o.country.en !== 'Indonesia') },
+    ...ISLANDS.map((i) => ({ id: i.id, label: t(i.nameKey), list: ORIGINS.filter((o) => o.island === i.id) })),
+    { id: 'world', label: t('search.world'), list: ORIGINS.filter((o) => !o.island) },
   ]
 
   return (
@@ -59,7 +60,7 @@ export default function BeanSearch() {
             onChange={(e) => setParams(e.target.value ? { q: e.target.value } : {}, { replace: true })}
             className="h-12 rounded-xl border border-field bg-surface px-3.5 text-base text-ink placeholder:text-muted"
           />
-          <span className="text-xs text-muted">{t('search.hint')}</span>
+          <span className="text-xs text-muted">{t('search.hint', { n: ORIGINS.length })}</span>
         </div>
 
         {query.trim() ? (
@@ -78,16 +79,30 @@ export default function BeanSearch() {
             )}
           </section>
         ) : (
-          groups.map((g) => (
-            <section key={g.label} className="flex flex-col gap-2">
-              <SectionLabel>{g.label}</SectionLabel>
-              <ul className="m-0 flex list-none flex-col gap-2 p-0">
-                {g.list.map((o) => (
-                  <OriginRow key={o.id} origin={o} query="" />
-                ))}
-              </ul>
-            </section>
-          ))
+          <>
+            <nav aria-label={t('search.jump')} className="flex flex-wrap gap-1.5">
+              {groups.map((g) => (
+                <button
+                  key={g.id}
+                  type="button"
+                  onClick={() => document.getElementById(`group-${g.id}`)?.scrollIntoView?.({ behavior: 'smooth' })}
+                  className="min-h-11 rounded-full border border-line bg-surface px-3 text-[13px] font-semibold text-ink"
+                >
+                  {g.label}
+                </button>
+              ))}
+            </nav>
+            {groups.map((g) => (
+              <section key={g.id} id={`group-${g.id}`} className="flex scroll-mt-4 flex-col gap-2">
+                <SectionLabel>{g.label}</SectionLabel>
+                <ul className="m-0 flex list-none flex-col gap-2 p-0">
+                  {g.list.map((o) => (
+                    <OriginRow key={o.id} origin={o} query="" />
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </>
         )}
       </div>
     </Screen>

@@ -16,13 +16,19 @@ function renderAt(path: string, lang: Lang = 'id') {
 }
 
 describe('bean search', () => {
-  it('opens from under the grind guide on the home screen and lists every origin', async () => {
+  it('opens from under the grind guide on the home screen and lists every origin by island', async () => {
     const user = userEvent.setup()
     renderAt('/')
     await user.click(screen.getByRole('link', { name: 'Cari biji kopi' }))
     expect(screen.getByRole('heading', { name: 'Cari biji kopi' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Indonesia' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /^Kintamani/ })).toBeInTheDocument()
+    const headings = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)
+    expect(headings).toEqual(['Sumatra', 'Jawa', 'Bali & Nusa Tenggara', 'Sulawesi', 'Kalimantan', 'Papua', 'Mancanegara'])
+    const java = screen.getByRole('heading', { name: 'Jawa' }).parentElement!
+    expect(within(java).getByRole('link', { name: /^Java Puntang/ })).toBeInTheDocument()
+    expect(screen.getByText(/^\d+ origin di database bawaan/)).toBeInTheDocument()
+    const jump = screen.getByRole('navigation', { name: 'Lompat ke' })
+    expect(within(jump).getAllByRole('button').map((b) => b.textContent)).toEqual(headings)
+    await user.click(within(jump).getByRole('button', { name: 'Papua' }))
   })
 
   it('searches and shows taste notes by process with the origin details', async () => {
