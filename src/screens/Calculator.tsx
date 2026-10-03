@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { grindInfo } from '../data/grind'
 import type { BrewMethod, MethodId, TimeUnit } from '../data/methods'
@@ -26,6 +26,9 @@ import { useUnitFormat, type UnitFormat } from '../lib/units'
 import { BackHeader, Card, Screen, SectionLabel } from '../components/layout'
 import { Segmented } from '../components/Segmented'
 import { GrindCard } from '../components/GrindCard'
+import { BeanPicker } from '../components/BeanPicker'
+import { brewTempC } from '../data/beans'
+import { readBeanParam, useBean } from '../lib/bean'
 
 const SIZE_KEYS: Record<Exclude<SizeLabel, 'cup' | 'volume'>, MessageKey> = {
   small: 'portion.small',
@@ -55,6 +58,13 @@ export default function Calculator({ method }: { method: BrewMethod }) {
   const u = useUnitFormat()
   const isEspresso = method.kind === 'espresso'
   const portion = PORTIONS[method.id]
+  const { bean, setBean } = useBean()
+  // A recipe link carries the beans it was brewed with.
+  const [linkedBean] = useState(() => readBeanParam(search.get('beans')))
+  useEffect(() => {
+    if (linkedBean) setBean(linkedBean)
+  }, [linkedBean, setBean])
+  const tempC = brewTempC(method, bean)
 
   // Coming back from the timer or opening a recipe restores what was brewed:
   // a guided choice reopens Takaran, plain numbers reopen Eksperimen.
@@ -149,6 +159,7 @@ export default function Calculator({ method }: { method: BrewMethod }) {
     <Screen>
       <BackHeader to="/" title={t(method.nameKey)} />
       <div className="flex flex-col gap-3.5 px-5">
+        {tempC !== null && <BeanPicker method={method} />}
         <Segmented<CalcMode>
           label={t('calc.mode.label')}
           value={mode}
@@ -302,8 +313,8 @@ export default function Calculator({ method }: { method: BrewMethod }) {
         <div className="grid grid-cols-3 gap-2.5">
           <Card className="flex flex-col gap-0.5 p-3">
             <span className="text-xs text-muted">{t('calc.temperature')}</span>
-            <span className={method.tempC !== null ? 'font-mono' : 'text-sm font-semibold'}>
-              {method.tempC !== null ? u.fmtTemp(method.tempC) : method.tempNoteKey && t(method.tempNoteKey)}
+            <span className={tempC !== null ? 'font-mono' : 'text-sm font-semibold'}>
+              {tempC !== null ? u.fmtTemp(tempC) : method.tempNoteKey && t(method.tempNoteKey)}
             </span>
           </Card>
           <Card className="flex flex-col gap-0.5 p-3">

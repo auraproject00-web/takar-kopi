@@ -53,3 +53,12 @@ export function ChevronLeftIcon() {
     </Icon>
   )
 }
+
+export function BeanIcon() {
+  return (
+    <Icon>
+      <ellipse cx="12" cy="12" rx="6.5" ry="9" transform="rotate(35 12 12)" />
+      <path d="M8.5 18.5c1-3 4-4.5 3.5-6.5s2.5-3.5 3.5-6.5" />
+    </Icon>
+  )
+}
