@@ -2,6 +2,7 @@ import Dexie, { type EntityTable } from 'dexie'
 import { findMethod, type MethodId } from '../data/methods'
 import { cleanBean, type BeanChoice } from '../data/beans'
 import type { PourStyle } from './brew'
+import { cleanCustom, type BrewCustom } from './custom'
 
 export interface Recipe {
   id: string
@@ -15,6 +16,8 @@ export interface Recipe {
   roastery: string
   /** Species, process and roast picked when brewing (older recipes have none). */
   beanChoice?: BeanChoice
+  /** Eksperimen settings: temperature, grind, time and own steps. */
+  custom?: BrewCustom
   notes: string
   /** 0 = not rated, otherwise 1–5. */
   rating: number
@@ -108,6 +111,7 @@ export function sanitizeRecipe(raw: unknown): Recipe | null {
   const time = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : now)
   const rating = Math.round(Number(r.rating))
   const beanChoice = cleanBean(r.beanChoice)
+  const custom = cleanCustom(r.custom)
   return {
     id: r.id.slice(0, 100),
     methodId: method.id,
@@ -122,6 +126,7 @@ export function sanitizeRecipe(raw: unknown): Recipe | null {
     createdAt: time(r.createdAt),
     updatedAt: time(r.updatedAt),
     ...(beanChoice ? { beanChoice } : {}),
+    ...(custom ? { custom } : {}),
   }
 }
 

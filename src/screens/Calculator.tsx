@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { grindInfo } from '../data/grind'
+import { GRIND_LEVELS, grindInfo, type GrindLevel } from '../data/grind'
 import type { BrewMethod, MethodId, TimeUnit } from '../data/methods'
 import type { MessageKey } from '../i18n/I18nProvider'
 import { useI18n } from '../i18n/useI18n'
@@ -27,6 +27,8 @@ import { BackHeader, Card, Screen, SectionLabel } from '../components/layout'
 import { Segmented } from '../components/Segmented'
 import { GrindCard } from '../components/GrindCard'
 import { BeanPicker } from '../components/BeanPicker'
+import { CustomSchedule } from '../components/CustomSchedule'
+import { customQuery, grindFor, parseClock, readCustom, TEMP_LIMITS, type BrewCustom } from '../lib/custom'
 import { brewTempC } from '../data/beans'
 import { readBeanParam, useBean } from '../lib/bean'
 
@@ -85,6 +87,12 @@ export default function Calculator({ method }: { method: BrewMethod }) {
   const [raw, setRaw] = useState(() => formatNumber(u.weight(initial.coffee), 2))
   const [customRatio, setCustomRatio] = useState(initial.ratio)
   const [customStyle, setCustomStyle] = useState<PourStyle>(initial.style)
+  const [custom, setCustom] = useState<BrewCustom>(() => readCustom(search) ?? {})
+  // Bumped to reload the step editor when its steps are replaced from outside.
+  const [scheduleKey, setScheduleKey] = useState(0)
+  const [timeRaw, setTimeRaw] = useState(() =>
+    custom.time === undefined ? '' : method.time.unit === 'clock' ? formatClock(custom.time) : String(custom.time),
+  )
 
   let amounts: Amounts
   let ratio: number
@@ -101,23 +109,46 @@ export default function Calculator({ method }: { method: BrewMethod }) {
   }
 
   const shownWater = isEspresso ? u.weight(amounts.water) : u.volume(amounts.water)
-  const steps = brewSchedule(method, amounts.coffee, amounts.hotWater ?? amounts.water, style)
-  const query = brewQuery({ coffee: amounts.coffee, ratio, style }) + (mode === 'guided' ? `&${guidedQuery(choice)}` : '')
+  const brewWater = amounts.hotWater ?? amounts.water
+  const defaultSteps = brewSchedule(method, amounts.coffee, brewWater, style)
+  // Eksperimen settings only count on that tab.
+  const own = mode === 'custom' ? custom : undefined
+  const steps = own?.steps ?? defaultSteps
+  const shownTempC = tempC === null ? null : (own?.tempC ?? tempC)
+  const grind = grindFor(method, own)
+  const extra = mode === 'guided' ? guidedQuery(choice) : customQuery(custom)
+  const query = brewQuery({ coffee: amounts.coffee, ratio, style }) + (extra ? `&${extra}` : '')
   const timerLink = `/seduh/${method.id}/timer${query}`
   const saveLink = `/resep/baru${query}&metode=${method.id}`
 
   function changeStyle(next: PourStyle) {
     setCustomStyle(next)
     if (next === '46') setCustomRatio(POUR_STYLE_46.ratio)
+    setSteps(undefined)
+  }
+
+  function setSteps(next: BrewStep[] | undefined) {
+    setCustom({ ...custom, steps: next })
+    setScheduleKey((k) => k + 1)
+  }
+
+  function changeTime(raw: string) {
+    setTimeRaw(raw)
+    const value = method.time.unit === 'clock' ? parseClock(raw) : Number.parseFloat(raw.replace(',', '.'))
+    setCustom({ ...custom, time: value !== null && value > 0 ? value : undefined })
   }
 
   const coffeeLabel = isEspresso ? t('calc.dose') : t('calc.coffee')
   const waterLabel = isEspresso ? t('calc.yield') : t('calc.water')
   const waterUnit = isEspresso ? u.weightLabel : u.volumeLabel
+  const timeUnitLabel = method.time.unit === 'clock' ? '' : t(UNIT_KEYS[method.time.unit])
+  const defaultTimeText =
+    style === '46' && supportsPourStyle(method) ? formatClock(POUR_STYLE_46.end) : formatTime(method.time, timeUnitLabel)
   const timeText =
-    style === '46' && supportsPourStyle(method)
-      ? formatClock(POUR_STYLE_46.end)
-      : formatTime(method.time, method.time.unit === 'clock' ? '' : t(UNIT_KEYS[method.time.unit]))
+    own?.time === undefined
+      ? defaultTimeText
+      : formatTime({ min: own.time, unit: method.time.unit }, timeUnitLabel)
+  const timeLabel = method.kind === 'coldBrew' ? t('calc.steepTime') : t('calc.totalTime')
 
   // Keep the numbers on screen when flipping which side is typed in.
   function switchInput(next: InputMode) {
@@ -310,26 +341,106 @@ export default function Calculator({ method }: { method: BrewMethod }) {
           </Card>
         )}
 
-        <div className="grid grid-cols-3 gap-2.5">
-          <Card className="flex flex-col gap-0.5 p-3">
-            <span className="text-xs text-muted">{t('calc.temperature')}</span>
-            <span className={tempC !== null ? 'font-mono' : 'text-sm font-semibold'}>
-              {tempC !== null ? u.fmtTemp(tempC) : method.tempNoteKey && t(method.tempNoteKey)}
-            </span>
+        {mode === 'custom' ? (
+          <Card className="flex flex-col p-3.5 pt-1">
+            {shownTempC !== null && (
+              <div className="flex min-h-14 items-center justify-between gap-3 border-b border-line-soft py-1.5">
+                <span className="flex flex-col">
+                  <span className="text-[15px] font-semibold" id="temp-label">
+                    {t('calc.temperature')}
+                  </span>
+                  {custom.tempC !== undefined && (
+                    <button
+                      type="button"
+                      onClick={() => setCustom({ ...custom, tempC: undefined })}
+                      className="min-h-8 text-left text-[13px] font-semibold text-accent"
+                    >
+                      {t('calc.tempFromBeans', { temp: u.fmtTemp(tempC!) })}
+                    </button>
+                  )}
+                </span>
+                <div className="flex items-center gap-1" role="group" aria-labelledby="temp-label">
+                  <button
+                    type="button"
+                    aria-label={t('calc.tempLess')}
+                    disabled={shownTempC <= TEMP_LIMITS.min}
+                    onClick={() => setCustom({ ...custom, tempC: shownTempC - 1 })}
+                    className="flex size-11 items-center justify-center rounded-full bg-track text-xl font-semibold text-ink disabled:opacity-40"
+                  >
+                    −
+                  </button>
+                  <output aria-live="polite" className="w-16 text-center font-mono text-lg">
+                    {u.fmtTemp(shownTempC)}
+                  </output>
+                  <button
+                    type="button"
+                    aria-label={t('calc.tempMore')}
+                    disabled={shownTempC >= TEMP_LIMITS.max}
+                    onClick={() => setCustom({ ...custom, tempC: shownTempC + 1 })}
+                    className="flex size-11 items-center justify-center rounded-full bg-track text-xl font-semibold text-ink disabled:opacity-40"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            )}
+            <label className="flex min-h-14 items-center justify-between gap-3 border-b border-line-soft py-1.5">
+              <span className="text-[15px] font-semibold">{t('calc.grind')}</span>
+              <select
+                value={grind}
+                onChange={(e) => {
+                  const level = e.target.value as GrindLevel
+                  setCustom({ ...custom, grind: level === method.grind ? undefined : level })
+                }}
+                className="h-11 min-w-0 rounded-[10px] border border-field bg-surface px-2.5 text-[15px] font-medium text-ink"
+              >
+                {GRIND_LEVELS.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {t(g.nameKey)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="flex min-h-14 items-center justify-between gap-3 py-1.5">
+              <span className="flex flex-col">
+                <span className="text-[15px] font-semibold">{timeLabel}</span>
+                <span className="text-xs text-muted">
+                  {method.time.unit === 'clock' ? t('calc.timeHintClock') : t('calc.timeHint', { unit: timeUnitLabel })}
+                </span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <input
+                  type="text"
+                  inputMode={method.time.unit === 'clock' ? 'numeric' : 'decimal'}
+                  value={timeRaw}
+                  placeholder={method.time.unit === 'clock' ? defaultTimeText : String(method.time.max ?? method.time.min)}
+                  onChange={(e) => changeTime(e.target.value.replace(/[^\d:.,]/g, ''))}
+                  className="h-11 w-20 rounded-[10px] border border-field bg-surface px-2.5 text-right font-mono text-[15px] text-ink placeholder:text-muted"
+                />
+                {timeUnitLabel && <span className="text-sm text-muted">{timeUnitLabel}</span>}
+              </span>
+            </label>
           </Card>
-          <Card className="flex flex-col gap-0.5 p-3">
-            <span className="text-xs text-muted">{t('calc.grind')}</span>
-            <span className="text-sm font-semibold">{t(grindInfo(method.grind).nameKey)}</span>
-          </Card>
-          <Card className="flex flex-col gap-0.5 p-3">
-            <span className="text-xs text-muted">
-              {method.kind === 'coldBrew' ? t('calc.steepTime') : t('calc.totalTime')}
-            </span>
-            <span className="font-mono">{timeText}</span>
-          </Card>
-        </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-2.5">
+            <Card className="flex flex-col gap-0.5 p-3">
+              <span className="text-xs text-muted">{t('calc.temperature')}</span>
+              <span className={shownTempC !== null ? 'font-mono' : 'text-sm font-semibold'}>
+                {shownTempC !== null ? u.fmtTemp(shownTempC) : method.tempNoteKey && t(method.tempNoteKey)}
+              </span>
+            </Card>
+            <Card className="flex flex-col gap-0.5 p-3">
+              <span className="text-xs text-muted">{t('calc.grind')}</span>
+              <span className="text-sm font-semibold">{t(grindInfo(grind).nameKey)}</span>
+            </Card>
+            <Card className="flex flex-col gap-0.5 p-3">
+              <span className="text-xs text-muted">{timeLabel}</span>
+              <span className="font-mono">{timeText}</span>
+            </Card>
+          </div>
+        )}
 
-        <GrindCard method={method} />
+        <GrindCard method={method} level={grind} />
 
         {mode === 'custom' && supportsPourStyle(method) && (
           <div className="flex flex-col gap-2">
@@ -347,7 +458,54 @@ export default function Calculator({ method }: { method: BrewMethod }) {
           </div>
         )}
 
-        {steps.length > 0 && <Schedule steps={steps} methodId={method.id} units={u} />}
+        {mode === 'custom' ? (
+          <section className="flex flex-col gap-2">
+            <SectionLabel>{t('calc.pourSchedule')}</SectionLabel>
+            {custom.steps === undefined ? (
+              <>
+                {defaultSteps.length > 0 ? (
+                  <ScheduleList steps={defaultSteps} methodId={method.id} units={u} />
+                ) : (
+                  <p className="m-0 text-sm text-muted">{t('calc.step.noDefault')}</p>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setSteps(defaultSteps)}
+                  className="flex min-h-11 items-center justify-center rounded-xl border border-field text-sm font-semibold text-accent"
+                >
+                  {defaultSteps.length > 0 ? t('calc.step.edit') : t('calc.step.create')}
+                </button>
+              </>
+            ) : (
+              <>
+                <CustomSchedule
+                  key={scheduleKey}
+                  steps={custom.steps}
+                  water={brewWater}
+                  methodId={method.id}
+                  units={u}
+                  onChange={(next) => setCustom({ ...custom, steps: next })}
+                />
+                {defaultSteps.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setSteps(undefined)}
+                    className="flex min-h-11 items-center justify-center text-sm font-semibold text-muted"
+                  >
+                    {t('calc.step.reset')}
+                  </button>
+                )}
+              </>
+            )}
+          </section>
+        ) : (
+          steps.length > 0 && (
+            <section className="flex flex-col gap-2">
+              <SectionLabel>{t('calc.pourSchedule')}</SectionLabel>
+              <ScheduleList steps={steps} methodId={method.id} units={u} />
+            </section>
+          )
+        )}
 
         <Tip method={method} timeText={timeText} />
 
@@ -369,27 +527,24 @@ export default function Calculator({ method }: { method: BrewMethod }) {
   )
 }
 
-function Schedule({ steps, methodId, units }: { steps: BrewStep[]; methodId: MethodId; units: UnitFormat }) {
+function ScheduleList({ steps, methodId, units }: { steps: BrewStep[]; methodId: MethodId; units: UnitFormat }) {
   const { t } = useI18n()
   const label = (s: BrewStep) => stepLabel(t, s, methodId)
   return (
-    <section className="flex flex-col gap-2">
-      <SectionLabel>{t('calc.pourSchedule')}</SectionLabel>
-      <Card>
-        <ol className="m-0 list-none p-0">
-          {steps.map((s, i) => (
-            <li
-              key={i}
-              className="grid grid-cols-[52px_minmax(0,1fr)_76px] items-center border-b border-line-soft px-3.5 py-2.5 text-sm last:border-b-0"
-            >
-              <span className="font-mono text-muted">{formatClock(s.atSec)}</span>
-              <span className="font-medium">{label(s)}</span>
-              <span className="text-right font-mono">{s.targetG !== undefined ? units.fmtWeight(s.targetG) : ''}</span>
-            </li>
-          ))}
-        </ol>
-      </Card>
-    </section>
+    <Card>
+      <ol className="m-0 list-none p-0">
+        {steps.map((s, i) => (
+          <li
+            key={i}
+            className="grid grid-cols-[52px_minmax(0,1fr)_76px] items-center border-b border-line-soft px-3.5 py-2.5 text-sm last:border-b-0"
+          >
+            <span className="font-mono text-muted">{formatClock(s.atSec)}</span>
+            <span className="font-medium">{label(s)}</span>
+            <span className="text-right font-mono">{s.targetG !== undefined ? units.fmtWeight(s.targetG) : ''}</span>
+          </li>
+        ))}
+      </ol>
+    </Card>
   )
 }
 

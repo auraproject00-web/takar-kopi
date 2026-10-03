@@ -104,7 +104,8 @@ describe('picking beans before brewing', () => {
     localStorage.setItem('cb.bean', JSON.stringify({ species: 'robusta', process: 'washed', roast: 'dark' }))
     renderAt('/seduh/v60?kopi=15&rasio=16&beans=arabica-anaerobic-light')
     expect(await screen.findByText('Arabika · Anaerob · Light')).toBeInTheDocument()
-    expect(tempCard()).toHaveTextContent('93°C')
+    // Recipe links open Eksperimen, where the temperature is a stepper.
+    expect(screen.getByRole('group', { name: 'Suhu' })).toHaveTextContent('93°C')
   })
 
   it('keeps an old recipe without beans on the method temperature', async () => {

@@ -1,18 +1,23 @@
 import { Link } from 'react-router-dom'
-import { GRIND_LEVELS, grindInfo } from '../data/grind'
+import { GRIND_LEVELS, grindInfo, type GrindLevel } from '../data/grind'
 import { findGrinder, GRINDERS, toRotationNotation, type GrinderId } from '../data/grinders'
-import type { BrewMethod } from '../data/methods'
+import { METHODS, type BrewMethod } from '../data/methods'
 import { useI18n } from '../i18n/useI18n'
 import { usePersistentState } from '../lib/usePersistentState'
 import { Card } from './layout'
 
 type GrinderChoice = GrinderId | 'custom'
 
-export function GrindCard({ method }: { method: BrewMethod }) {
+/**
+ * `level` overrides the method's grind (Eksperimen); clicks then come from a
+ * method that uses that grind, or are left out when none does.
+ */
+export function GrindCard({ method, level: levelId = method.grind }: { method: BrewMethod; level?: GrindLevel }) {
   const { t } = useI18n()
   const [savedChoice, setGrinderId] = usePersistentState<GrinderChoice>('cb.grinder', 'c40')
   const [customClicks, setCustomClicks] = usePersistentState<Record<string, string>>('cb.customClicks', {})
-  const level = grindInfo(method.grind)
+  const level = grindInfo(levelId)
+  const clicksFrom = levelId === method.grind ? method : METHODS.find((m) => m.grind === levelId)
   const methodName = t(method.nameKey)
   // A stored id from an older version may no longer exist; fall back to the first grinder.
   const grinder = savedChoice === 'custom' ? undefined : (findGrinder(savedChoice) ?? GRINDERS[0])
@@ -61,18 +66,20 @@ export function GrindCard({ method }: { method: BrewMethod }) {
         <option value="custom">{t('grind.otherGrinder')}</option>
       </select>
 
-      {grinder ? (
+      {grinder && !clicksFrom ? (
+        <span className="text-[13px] text-muted">{t('grind.noClicks')}</span>
+      ) : grinder && clicksFrom ? (
         <div className="flex flex-col gap-1 rounded-xl bg-inverse px-3.5 py-3 text-on-inverse">
           <div className="flex items-center justify-between">
             <span className="text-[13px] text-on-inverse-muted">{t('grind.setTo')}</span>
             <span className="font-mono text-[22px]" data-testid="clicks">
-              {grinder.clicks[method.id][0]}–{grinder.clicks[method.id][1]} {t('unit.clicks')}
+              {grinder.clicks[clicksFrom.id][0]}–{grinder.clicks[clicksFrom.id][1]} {t('unit.clicks')}
             </span>
           </div>
           {grinder.clicksPerRotation && (
             <span className="text-right font-mono text-xs text-on-inverse-muted">
-              {toRotationNotation(grinder.clicks[method.id][0], grinder.clicksPerRotation)} –{' '}
-              {toRotationNotation(grinder.clicks[method.id][1], grinder.clicksPerRotation)} ·{' '}
+              {toRotationNotation(grinder.clicks[clicksFrom.id][0], grinder.clicksPerRotation)} –{' '}
+              {toRotationNotation(grinder.clicks[clicksFrom.id][1], grinder.clicksPerRotation)} ·{' '}
               {t('grind.rotations', { n: grinder.clicksPerRotation })}
             </span>
           )}

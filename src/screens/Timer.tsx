@@ -13,6 +13,7 @@ import { useWakeLock } from '../lib/useWakeLock'
 import { useUnitFormat } from '../lib/units'
 import { brewTempC } from '../data/beans'
 import { useBean } from '../lib/bean'
+import { customQuery, readCustom } from '../lib/custom'
 
 export default function Timer({ method }: { method: BrewMethod }) {
   const { t } = useI18n()
@@ -20,8 +21,10 @@ export default function Timer({ method }: { method: BrewMethod }) {
   const params = readBrewParams(method, search)
   const amounts = calcAmounts(method.kind, 'coffee', params.coffee, params.ratio)
   const brewWater = amounts.hotWater ?? amounts.water
-  const steps = brewSchedule(method, amounts.coffee, brewWater, params.style)
-  const endSec = brewEndSec(method, steps, params.style)
+  // Eksperimen can bring its own steps, total time and temperature.
+  const own = readCustom(search)
+  const steps = own?.steps ?? brewSchedule(method, amounts.coffee, brewWater, params.style)
+  const endSec = brewEndSec(method, steps, params.style, own?.time)
   const timer = useBrewTimer(endSec * 1000)
   const [sound, setSound] = usePersistentState('cb.sound', true)
   const [vibrate, setVibrate] = usePersistentState('cb.vibrate', true)
@@ -33,7 +36,8 @@ export default function Timer({ method }: { method: BrewMethod }) {
   // Keep the whole query (including a guided size/cups/strength) so the calculator reopens as it was.
   const backQuery = search.toString() ? `?${search.toString()}` : brewQuery(params)
   const calcLink = `/seduh/${method.id}${backQuery}`
-  const saveLink = `/resep/baru${brewQuery(params)}&metode=${method.id}`
+  const ownQuery = customQuery(own)
+  const saveLink = `/resep/baru${brewQuery(params)}&metode=${method.id}${ownQuery ? `&${ownQuery}` : ''}`
 
   const elapsedSec = timer.elapsedMs / 1000
   const started = timer.status !== 'idle'
@@ -65,7 +69,8 @@ export default function Timer({ method }: { method: BrewMethod }) {
   if (steps.length === 0) return <Navigate to={calcLink} replace />
 
   const progress = Math.min(100, (elapsedSec / endSec) * 100)
-  const tempC = brewTempC(method, bean)
+  const beanTempC = brewTempC(method, bean)
+  const tempC = beanTempC === null ? null : (own?.tempC ?? beanTempC)
   const tempText = tempC !== null ? ` · ${u.fmtTemp(tempC)}` : ''
 
   return (
