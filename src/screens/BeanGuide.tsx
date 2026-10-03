@@ -1,7 +1,8 @@
 import { beanTempRange, PROCESSES, ROASTS, SPECIES, type BeanInfo, type RoastId } from '../data/beans'
 import { useI18n } from '../i18n/useI18n'
 import { useUnitFormat } from '../lib/units'
-import { usePersistentState } from '../lib/usePersistentState'
+import { useState } from 'react'
+import { useBean } from '../lib/bean'
 import { Card, Screen, SectionLabel } from '../components/layout'
 import { Segmented } from '../components/Segmented'
 
@@ -27,8 +28,11 @@ function BeanCard({ bean, temp }: { bean: BeanInfo<string>; temp: string }) {
 export default function BeanGuide() {
   const { t } = useI18n()
   const u = useUnitFormat()
-  const [savedRoast, setRoast] = usePersistentState<RoastId>('cb.roast', 'medium')
-  const roast = ROASTS.find((r) => r.id === savedRoast) ?? ROASTS[1]!
+  const { bean, chosen, setBean } = useBean()
+  // Shares the roast with the calculator once beans have been picked there.
+  const [localRoast, setLocalRoast] = useState<RoastId>(bean.roast)
+  const roast = ROASTS.find((r) => r.id === (chosen ? bean.roast : localRoast)) ?? ROASTS[1]!
+  const setRoast = (id: RoastId) => (chosen ? setBean({ ...bean, roast: id }) : setLocalRoast(id))
   const range = (offset: number) => {
     const [min, max] = beanTempRange(roast.id, offset)
     return `${u.fmtTemp(min)}–${u.fmtTemp(max)}`

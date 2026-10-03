@@ -270,5 +270,16 @@
   "beans.anaerobic.desc": "Fermented in sealed tanks without oxygen before drying.",
   "beans.anaerobic.flavor": "Intense ferment, tropical fruit, boozy",
   "beans.processNote": "Process temperatures assume arabica.",
-  "beans.note": "For hot manual brews. Espresso stays around {esp}, and cold brew uses room-temperature water. Too sour? Go up 1–2°. Too bitter? Go down 1–2°."
+  "beans.note": "For hot manual brews. Espresso stays around {esp}, and cold brew uses room-temperature water. Too sour? Go up 1–2°. Too bitter? Go down 1–2°.",
+  "beans.short.washed": "Washed",
+  "beans.short.natural": "Natural",
+  "beans.short.honey": "Honey",
+  "beans.short.wetHulled": "Wet-hulled",
+  "beans.short.anaerobic": "Anaerobic",
+  "calc.bean.title": "Beans",
+  "calc.bean.prompt": "Pick your beans first and we'll match the water temperature.",
+  "calc.bean.use": "Use these beans",
+  "calc.bean.change": "Change",
+  "calc.bean.done": "Done",
+  "calc.bean.guide": "See the bean guide"
 }

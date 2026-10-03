@@ -270,5 +270,16 @@
   "beans.anaerobic.desc": "Difermentasi dalam wadah tertutup tanpa oksigen sebelum dijemur.",
   "beans.anaerobic.flavor": "Fermentasi kuat, buah tropis, boozy",
   "beans.processNote": "Suhu proses dihitung untuk arabika.",
-  "beans.note": "Untuk seduh manual panas. Espresso tetap di sekitar {esp}, dan cold brew pakai air suhu ruang. Terlalu asam? Naikkan 1–2°. Terlalu pahit? Turunkan 1–2°."
+  "beans.note": "Untuk seduh manual panas. Espresso tetap di sekitar {esp}, dan cold brew pakai air suhu ruang. Terlalu asam? Naikkan 1–2°. Terlalu pahit? Turunkan 1–2°.",
+  "beans.short.washed": "Washed",
+  "beans.short.natural": "Natural",
+  "beans.short.honey": "Honey",
+  "beans.short.wetHulled": "Giling basah",
+  "beans.short.anaerobic": "Anaerob",
+  "calc.bean.title": "Beans",
+  "calc.bean.prompt": "Pilih beans dulu, suhu airnya kami sesuaikan.",
+  "calc.bean.use": "Pakai beans ini",
+  "calc.bean.change": "Ganti",
+  "calc.bean.done": "Selesai",
+  "calc.bean.guide": "Lihat panduan beans"
 }

@@ -1,10 +1,11 @@
 import { findMethod } from '../data/methods'
+import { beanParam } from './bean'
 import { calcAmounts, formatRatio } from './brew'
 import { brewQuery } from './brewParams'
 import type { Recipe } from './recipes'
 import type { UnitFormat } from './units'
 
-type Brewable = Pick<Recipe, 'methodId' | 'coffee' | 'ratio' | 'style'>
+type Brewable = Pick<Recipe, 'methodId' | 'coffee' | 'ratio' | 'style' | 'beanChoice'>
 
 /** "15 g · 240 ml · 1:16" (espresso: "18 g → 36 g · 1:2"), in the user's units. */
 export function brewSummary(r: Brewable, u: UnitFormat): string {
@@ -19,7 +20,8 @@ export function brewSummary(r: Brewable, u: UnitFormat): string {
   return `${amounts} · ${formatRatio(r.ratio)}${style}`
 }
 
-/** Opens the calculator with the recipe's numbers. */
+/** Opens the calculator with the recipe's numbers (and its beans, if saved). */
 export function brewLink(r: Brewable): string {
-  return `/seduh/${r.methodId}${brewQuery({ coffee: r.coffee, ratio: r.ratio, style: r.style })}`
+  const beans = r.beanChoice ? `&beans=${beanParam(r.beanChoice)}` : ''
+  return `/seduh/${r.methodId}${brewQuery({ coffee: r.coffee, ratio: r.ratio, style: r.style })}${beans}`
 }

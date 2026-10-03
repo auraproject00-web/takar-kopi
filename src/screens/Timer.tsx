@@ -11,6 +11,8 @@ import { useBrewTimer } from '../lib/useBrewTimer'
 import { usePersistentState } from '../lib/usePersistentState'
 import { useWakeLock } from '../lib/useWakeLock'
 import { useUnitFormat } from '../lib/units'
+import { brewTempC } from '../data/beans'
+import { useBean } from '../lib/bean'
 
 export default function Timer({ method }: { method: BrewMethod }) {
   const { t } = useI18n()
@@ -25,6 +27,7 @@ export default function Timer({ method }: { method: BrewMethod }) {
   const [vibrate, setVibrate] = usePersistentState('cb.vibrate', true)
   const [keepAwake] = usePersistentState('cb.keepAwake', true)
   const u = useUnitFormat()
+  const { bean } = useBean()
   const [buzzSupported] = useState(canBuzz)
   const flashRef = useRef<HTMLDivElement>(null)
   // Keep the whole query (including a guided size/cups/strength) so the calculator reopens as it was.
@@ -62,7 +65,8 @@ export default function Timer({ method }: { method: BrewMethod }) {
   if (steps.length === 0) return <Navigate to={calcLink} replace />
 
   const progress = Math.min(100, (elapsedSec / endSec) * 100)
-  const tempText = method.tempC !== null ? ` · ${u.fmtTemp(method.tempC)}` : ''
+  const tempC = brewTempC(method, bean)
+  const tempText = tempC !== null ? ` · ${u.fmtTemp(tempC)}` : ''
 
   return (
     <main className="light-tokens mx-auto flex min-h-dvh w-full max-w-md flex-col bg-ink text-white">

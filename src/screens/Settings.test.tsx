@@ -80,7 +80,8 @@ describe('settings', () => {
     renderAt('/seduh/v60?kopi=15&rasio=16')
     expect(screen.getByRole('textbox', { name: /Kopi \(oz\)/ })).toHaveValue('0.53')
     expect(screen.getByText('8.1')).toBeInTheDocument()
-    expect(screen.getByText('199°F')).toBeInTheDocument()
+    // Bean picker and temperature card.
+    expect(screen.getAllByText('199°F')).toHaveLength(2)
     expect(screen.getByText('8.47 oz')).toBeInTheDocument()
     unmount()
 

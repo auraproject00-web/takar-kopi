@@ -7,6 +7,8 @@ import { readBrewParams } from '../lib/brewParams'
 import { addRecipe, updateRecipe, type Recipe, type RecipeInput } from '../lib/recipes'
 import { brewLink, brewSummary } from '../lib/recipeView'
 import { BackHeader, Screen } from '../components/layout'
+import { brewTempC } from '../data/beans'
+import { beanSummary, useBean } from '../lib/bean'
 import { RatingInput } from '../components/Stars'
 
 const fieldClass =
@@ -25,6 +27,9 @@ export default function RecipeForm({
   const { t } = useI18n()
   const u = useUnitFormat()
   const navigate = useNavigate()
+  const current = useBean()
+  // New recipes take the beans picked in the calculator; edits keep their own.
+  const [beanChoice] = useState(() => (existing ? existing.beanChoice : current.chosen ? current.bean : undefined))
   const [brew] = useState(() =>
     existing
       ? { coffee: existing.coffee, ratio: existing.ratio, style: existing.style }
@@ -47,6 +52,7 @@ export default function RecipeForm({
       ...brew,
       bean: bean.trim(),
       roastery: roastery.trim(),
+      ...(beanChoice ? { beanChoice } : {}),
       notes: notes.trim(),
       rating,
     }
@@ -56,11 +62,13 @@ export default function RecipeForm({
   }
 
   const chips = [t(method.nameKey), ...brewSummary({ methodId: method.id, ...brew }, u).split(' · ')]
-  if (method.tempC !== null) chips.push(u.fmtTemp(method.tempC))
+  if (beanChoice) chips.push(beanSummary(beanChoice, t))
+  const tempC = beanChoice ? brewTempC(method, beanChoice) : method.tempC
+  if (tempC !== null) chips.push(u.fmtTemp(tempC))
 
   return (
     <Screen>
-      <BackHeader to={existing ? '/resep' : brewLink({ methodId: method.id, ...brew })} title={existing ? t('recipe.edit.title') : t('recipe.save.title')} />
+      <BackHeader to={existing ? '/resep' : brewLink({ methodId: method.id, ...brew, beanChoice })} title={existing ? t('recipe.edit.title') : t('recipe.save.title')} />
       <form onSubmit={save} className="flex flex-1 flex-col gap-3.5 px-5">
         <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
           {chips.map((c, i) => (

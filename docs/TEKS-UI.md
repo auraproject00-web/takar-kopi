@@ -366,3 +366,14 @@ Aturan gaya:
 | `beans.anaerobic.flavor` | Fermentasi kuat, buah tropis, boozy | Intense ferment, tropical fruit, boozy |
 | `beans.processNote` | Suhu proses dihitung untuk arabika. | Process temperatures assume arabica. |
 | `beans.note` | Untuk seduh manual panas. Espresso tetap di sekitar {esp}, dan cold brew pakai air suhu ruang. Terlalu asam? Naikkan 1–2°. Terlalu pahit? Turunkan 1–2°. | For hot manual brews. Espresso stays around {esp}, and cold brew uses room-temperature water. Too sour? Go up 1–2°. Too bitter? Go down 1–2°. |
+| `beans.short.washed` | Washed | Washed |
+| `beans.short.natural` | Natural | Natural |
+| `beans.short.honey` | Honey | Honey |
+| `beans.short.wetHulled` | Giling basah | Wet-hulled |
+| `beans.short.anaerobic` | Anaerob | Anaerobic |
+| `calc.bean.title` | Beans | Beans |
+| `calc.bean.prompt` | Pilih beans dulu, suhu airnya kami sesuaikan. | Pick your beans first and we'll match the water temperature. |
+| `calc.bean.use` | Pakai beans ini | Use these beans |
+| `calc.bean.change` | Ganti | Change |
+| `calc.bean.done` | Selesai | Done |
+| `calc.bean.guide` | Lihat panduan beans | See the bean guide |
