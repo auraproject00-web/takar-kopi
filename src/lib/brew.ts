@@ -148,11 +148,20 @@ export function brewSchedule(
   }
 }
 
-/** When the brew is finished: the method's total time, or the last step if that is later. */
-export function brewEndSec(method: BrewMethod, steps: BrewStep[], style: PourStyle = 'standard'): number {
+const SEC_PER_UNIT = { clock: 1, seconds: 1, minutes: 60, hours: 3600 } as const
+
+/**
+ * When the brew is finished: the total time (the user's own, in the method's
+ * unit, or the method's), or the last step if that is later.
+ */
+export function brewEndSec(method: BrewMethod, steps: BrewStep[], style: PourStyle = 'standard', customTime?: number): number {
+  const last = steps.at(-1)?.atSec ?? 0
+  const perUnit = SEC_PER_UNIT[method.time.unit]
+  if (customTime !== undefined) return Math.max(customTime * perUnit, last, 1)
   if (style === '46' && supportsPourStyle(method)) return POUR_STYLE_46.end
-  const total = method.time.unit === 'clock' ? method.time.min : 0
-  return Math.max(total, steps.at(-1)?.atSec ?? 0)
+  // Ranged times (espresso 25–30 s) run to the top of the range.
+  const total = (method.time.max ?? method.time.min) * perUnit
+  return Math.max(total, last, 1)
 }
 
 export function formatClock(totalSec: number): string {

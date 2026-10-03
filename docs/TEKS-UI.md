@@ -377,3 +377,32 @@ Aturan gaya:
 | `calc.bean.change` | Ganti | Change |
 | `calc.bean.done` | Selesai | Done |
 | `calc.bean.guide` | Lihat panduan beans | See the bean guide |
+
+## Tambahan: Eksperimen bisa diatur semua
+
+| Kunci | Indonesia | English |
+|---|---|---|
+| `calc.tempLess` | Turunkan suhu | Lower temperature |
+| `calc.tempMore` | Naikkan suhu | Raise temperature |
+| `calc.tempFromBeans` | Pakai suhu beans ({temp}) | Use the bean temperature ({temp}) |
+| `calc.timeHintClock` | Menit:detik, mis. 3:30 | Minutes:seconds, e.g. 3:30 |
+| `calc.timeHint` | Dalam {unit} | In {unit} |
+| `calc.stepType.pour` | Tuang | Pour |
+| `calc.stepType.drawdown` | Tetes habis | Drawdown |
+| `calc.step.timeCol` | Waktu | Time |
+| `calc.step.typeCol` | Langkah | Step |
+| `calc.step.time` | Waktu langkah {n} | Step {n} time |
+| `calc.step.type` | Jenis langkah {n} | Step {n} type |
+| `calc.step.target` | Target timbangan langkah {n} ({unit}) | Step {n} scale target ({unit}) |
+| `calc.step.remove` | Hapus langkah {n} | Remove step {n} |
+| `calc.step.none` | Belum ada langkah. | No steps yet. |
+| `calc.step.hint` | Target adalah angka di timbangan setelah langkah itu (total, bukan per tuangan). Urutan ikut waktu. | Targets are what the scale reads after that step (running total, not per pour). Steps are ordered by time. |
+| `calc.step.total` | Total tuang {poured}, airnya {water} | Pours add up to {poured}, water is {water} |
+| `calc.step.fit` | Sesuaikan | Fit to water |
+| `calc.step.add` | Tambah langkah | Add step |
+| `calc.step.edit` | Ubah jadwal tuang | Edit the pour schedule |
+| `calc.step.create` | Buat langkah sendiri | Make your own steps |
+| `calc.step.noDefault` | Metode ini tidak punya jadwal tuang. Buat langkah sendiri supaya bisa pakai timer. | This method has no pour schedule. Make your own steps to use the timer. |
+| `calc.step.reset` | Kembali ke jadwal bawaan | Back to the default schedule |
+| `grind.noClicks` | Belum ada data klik grinder untuk gilingan ini. | No grinder click data for this grind yet. |
+| `recipe.ownSchedule` | Jadwal sendiri | Own schedule |

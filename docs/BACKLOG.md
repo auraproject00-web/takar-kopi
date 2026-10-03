@@ -85,6 +85,7 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 | TK-45a | Masukan beta #1: kalkulator dua tab. **Takaran** (pilih ukuran gelas + jumlah gelas + Ringan/Normal/Pekat, angka dikunci) sebagai default, dan **Eksperimen** (isi bebas + slider ratio + 4:6). Tab terakhir diingat | M | [x] |
 | TK-45b | Masukan beta #2: form masukan **di dalam aplikasi** (Pengaturan → Kirim masukan): Android/iOS + saran, dikirim ke Google Form di belakang layar, antre saat offline | S | [x] |
 | TK-45c | Tab **Beans** + pilih beans sebelum seduh: jenis (arabika/robusta/liberika), proses (washed, natural, honey, giling basah, anaerob), sangrai → suhu air kalkulator, timer, dan resep ikut menyesuaikan | M | [x] |
+| TK-45d | Eksperimen bisa diatur semua: suhu, gilingan (+ klik grinder), total waktu, dan jadwal tuang (waktu, jenis langkah, target timbangan; tambah/hapus, sesuaikan ke total air). Ikut ke timer dan resep; espresso/moka/cold brew bisa punya timer lewat langkah sendiri | M | [x] |
 | TK-46 | Rilis v1.0 | S | [ ] |
 
 **Kriteria:** ≥ 20 beta tester, ≥ 60% menyimpan minimal 1 resep, tidak ada bug kritis.

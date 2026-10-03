@@ -9,6 +9,9 @@ import { brewLink, brewSummary } from '../lib/recipeView'
 import { BackHeader, Screen } from '../components/layout'
 import { brewTempC } from '../data/beans'
 import { beanSummary, useBean } from '../lib/bean'
+import { readCustom } from '../lib/custom'
+import { grindInfo } from '../data/grind'
+import { formatTime } from '../lib/brew'
 import { RatingInput } from '../components/Stars'
 
 const fieldClass =
@@ -32,9 +35,10 @@ export default function RecipeForm({
   const [beanChoice] = useState(() => (existing ? existing.beanChoice : current.chosen ? current.bean : undefined))
   const [brew] = useState(() =>
     existing
-      ? { coffee: existing.coffee, ratio: existing.ratio, style: existing.style }
-      : readBrewParams(method, search),
+      ? { coffee: existing.coffee, ratio: existing.ratio, style: existing.style, custom: existing.custom }
+      : { ...readBrewParams(method, search), custom: readCustom(search) },
   )
+  const { custom, ...amounts } = brew
   const [name, setName] = useState(existing?.name ?? '')
   const [bean, setBean] = useState(existing?.bean ?? '')
   const [roastery, setRoastery] = useState(existing?.roastery ?? '')
@@ -49,9 +53,10 @@ export default function RecipeForm({
     const input: RecipeInput = {
       methodId: method.id,
       name: name.trim() || t(method.nameKey),
-      ...brew,
+      ...amounts,
       bean: bean.trim(),
       roastery: roastery.trim(),
+      ...(custom ? { custom } : {}),
       ...(beanChoice ? { beanChoice } : {}),
       notes: notes.trim(),
       rating,
@@ -61,10 +66,17 @@ export default function RecipeForm({
     navigate('/resep', { state: { flash: 'recipe.saved' } })
   }
 
-  const chips = [t(method.nameKey), ...brewSummary({ methodId: method.id, ...brew }, u).split(' · ')]
+  const chips = [t(method.nameKey), ...brewSummary({ methodId: method.id, ...amounts }, u).split(' · ')]
   if (beanChoice) chips.push(beanSummary(beanChoice, t))
-  const tempC = beanChoice ? brewTempC(method, beanChoice) : method.tempC
+  const baseTempC = beanChoice ? brewTempC(method, beanChoice) : method.tempC
+  const tempC = baseTempC === null ? null : (custom?.tempC ?? baseTempC)
   if (tempC !== null) chips.push(u.fmtTemp(tempC))
+  if (custom?.grind) chips.push(t(grindInfo(custom.grind).nameKey))
+  if (custom?.time !== undefined) {
+    const unit = method.time.unit === 'clock' ? '' : t(`unit.${method.time.unit}`)
+    chips.push(formatTime({ min: custom.time, unit: method.time.unit }, unit))
+  }
+  if (custom?.steps) chips.push(t('recipe.ownSchedule'))
 
   return (
     <Screen>
