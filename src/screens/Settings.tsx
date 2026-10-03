@@ -5,19 +5,32 @@ import { FeedbackForm } from '../components/FeedbackForm'
 import { GRINDERS, type GrinderId } from '../data/grinders'
 import type { Lang } from '../i18n/I18nProvider'
 import { useI18n } from '../i18n/useI18n'
-import { canBuzz } from '../lib/cues'
+import { beep, canBuzz, unlockAudio } from '../lib/cues'
 import { useTheme, type Theme } from '../lib/theme'
 import { useUnits, type Units } from '../lib/units'
 import { usePersistentState } from '../lib/usePersistentState'
 import { Card, Screen, SectionLabel } from '../components/layout'
 import { Segmented } from '../components/Segmented'
 
-function Switch({ label, hint, on, onChange }: { label: string; hint: string; on: boolean; onChange: (on: boolean) => void }) {
+function Switch({
+  label,
+  hint,
+  on,
+  onChange,
+  extra,
+}: {
+  label: string
+  hint: string
+  on: boolean
+  onChange: (on: boolean) => void
+  extra?: ReactNode
+}) {
   return (
     <div className="flex min-h-16 items-center justify-between gap-3 border-b border-line-soft py-2 last:border-b-0">
       <span className="flex flex-col gap-0.5">
         <span className="text-[15px] font-semibold">{label}</span>
         <span className="text-[13px] text-muted">{hint}</span>
+        {extra}
       </span>
       <button
         type="button"
@@ -149,7 +162,24 @@ export default function Settings() {
                 <option value="custom">{t('grind.otherGrinder')}</option>
               </select>
             </label>
-            <Switch label={t('settings.sound')} hint={t('settings.soundHint')} on={sound} onChange={setSound} />
+            <Switch
+              label={t('settings.sound')}
+              hint={t('settings.soundHint')}
+              on={sound}
+              onChange={setSound}
+              extra={
+                <button
+                  type="button"
+                  onClick={() => {
+                    unlockAudio()
+                    beep()
+                  }}
+                  className="min-h-11 self-start text-sm font-semibold text-accent"
+                >
+                  {t('settings.testSound')}
+                </button>
+              }
+            />
             {buzzSupported && <Switch label={t('settings.vibrate')} hint={t('settings.vibrateHint')} on={vibrate} onChange={setVibrate} />}
             <Switch label={t('settings.keepAwake')} hint={t('settings.keepAwakeHint')} on={keepAwake} onChange={setKeepAwake} />
           </Card>

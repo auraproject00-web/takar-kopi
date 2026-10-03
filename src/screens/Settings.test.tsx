@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { I18nProvider } from '../i18n/I18nProvider'
 import App from '../App'
 import { addRecipe } from '../lib/recipes'
+import { FakeAudioContext, installFakeAudio, removeFakeAudio } from '../test/fakeAudio'
 
 function renderAt(path: string) {
   return render(
@@ -118,6 +119,15 @@ describe('settings', () => {
     await user.click(awake)
     expect(awake).toHaveAttribute('aria-checked', 'false')
     expect(localStorage.getItem('cb.keepAwake')).toBe('false')
+  })
+
+  it('plays a test sound so the volume can be checked', async () => {
+    installFakeAudio()
+    const user = userEvent.setup()
+    renderAt('/pengaturan')
+    await user.click(screen.getByRole('button', { name: 'Coba bunyi' }))
+    expect(FakeAudioContext.instances[0]!.oscillators).toHaveLength(1)
+    removeFakeAudio()
   })
 
   it('offers in-app feedback instead of a link out to Google Forms', () => {
