@@ -119,9 +119,9 @@ describe('settings', () => {
     expect(localStorage.getItem('cb.keepAwake')).toBe('false')
   })
 
-  it('hides feedback until the Google Form question ids are configured', () => {
+  it('offers in-app feedback instead of a link out to Google Forms', () => {
     renderAt('/pengaturan')
-    expect(screen.queryByRole('button', { name: 'Kirim masukan' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Kirim masukan' })).toHaveAttribute('aria-expanded', 'false')
     expect(screen.queryByRole('link', { name: 'Kirim masukan' })).not.toBeInTheDocument()
   })
 

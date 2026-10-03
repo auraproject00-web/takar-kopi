@@ -10,8 +10,8 @@ export const APP_VERSION: string = pkg.version
  */
 export const FEEDBACK_FORM = {
   action: 'https://docs.google.com/forms/d/e/1FAIpQLSeoLmPxDuARaRnJrPXPb5t5qLvqElrcZ-X6zNRePsjCiIJbXQ/formResponse',
-  deviceEntry: '',
-  messageEntry: '',
+  deviceEntry: 'entry.200164114', // "device" (Android / IOS)
+  messageEntry: 'entry.264880704', // "fitur aplikasi"
   deviceOptions: { android: 'Android', ios: 'IOS' },
 }
 
