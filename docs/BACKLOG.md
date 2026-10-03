@@ -80,7 +80,7 @@ Status: `[ ]` belum · `[~]` dikerjakan · `[x]` selesai
 | TK-41 | Dark mode | S | [x] |
 | TK-42 | Aksesibilitas: kontras warna, ukuran tombol ≥ 44px, label pembaca layar | S | [x] |
 | TK-43 | Layar onboarding singkat (3 slide) untuk pemula | S | [x] |
-| TK-44 | Rekrut 10–20 beta tester + form masukan (link form diisi di `src/config.ts` → `FEEDBACK_URL`) | S | [ ] |
+| TK-44 | Rekrut 10–20 beta tester + form masukan (Google Form sudah tertaut di Pengaturan → Kirim masukan) | S | [ ] |
 | TK-45 | Perbaikan bug dari hasil beta | L | [ ] |
 | TK-46 | Rilis v1.0 | S | [ ] |
 

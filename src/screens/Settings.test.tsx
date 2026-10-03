@@ -118,6 +118,13 @@ describe('settings', () => {
     expect(localStorage.getItem('cb.keepAwake')).toBe('false')
   })
 
+  it('links to the beta feedback form in a new tab', () => {
+    renderAt('/pengaturan')
+    const link = screen.getByRole('link', { name: 'Kirim masukan' })
+    expect(link).toHaveAttribute('href', expect.stringContaining('docs.google.com/forms/'))
+    expect(link).toHaveAttribute('target', '_blank')
+  })
+
   it('shows the app version', () => {
     renderAt('/pengaturan')
     expect(screen.getByText(/Versi 0\.9\.0/)).toBeInTheDocument()
