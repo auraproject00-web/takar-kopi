@@ -12,20 +12,37 @@ export function unlockAudio(): void {
   }
 }
 
+/**
+ * Loud enough to hear over a kettle: a square wave near 2 kHz, where phone
+ * speakers and our ears are most sensitive, with a low-pass filter taking off
+ * the harshest edge. A square carries far more energy than a sine at the same
+ * peak; even with only its fundamental left the peak stays below full scale
+ * (4/π × 0.7 ≈ 0.89), so nothing clips.
+ */
+export const BEEP = { hz: 2000, peak: 0.7, pulseSec: 0.24, gapSec: 0.12, lowpassHz: 6000 }
+
 export function beep(times = 1): void {
   if (!audio) return
   if (audio.state === 'suspended') void audio.resume()
+  const filter = audio.createBiquadFilter()
+  filter.type = 'lowpass'
+  filter.frequency.value = BEEP.lowpassHz
+  filter.connect(audio.destination)
   for (let i = 0; i < times; i++) {
-    const startAt = audio.currentTime + i * 0.22
+    const startAt = audio.currentTime + i * (BEEP.pulseSec + BEEP.gapSec)
+    const endAt = startAt + BEEP.pulseSec
     const osc = audio.createOscillator()
     const gain = audio.createGain()
-    osc.frequency.value = 880
-    gain.gain.setValueAtTime(0.0001, startAt)
-    gain.gain.exponentialRampToValueAtTime(0.3, startAt + 0.02)
-    gain.gain.exponentialRampToValueAtTime(0.0001, startAt + 0.16)
-    osc.connect(gain).connect(audio.destination)
+    osc.type = 'square'
+    osc.frequency.value = BEEP.hz
+    // Quick fades at both ends avoid clicks; the pulse holds full level in between.
+    gain.gain.setValueAtTime(0, startAt)
+    gain.gain.linearRampToValueAtTime(BEEP.peak, startAt + 0.01)
+    gain.gain.setValueAtTime(BEEP.peak, endAt - 0.03)
+    gain.gain.linearRampToValueAtTime(0, endAt)
+    osc.connect(gain).connect(filter)
     osc.start(startAt)
-    osc.stop(startAt + 0.18)
+    osc.stop(endAt + 0.02)
   }
 }
 

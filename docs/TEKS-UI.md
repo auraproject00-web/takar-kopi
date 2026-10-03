@@ -175,7 +175,8 @@ Aturan gaya:
 | `settings.brew` | Seduh | Brewing |
 | `settings.defaultGrinder` | Grinder default | Default grinder |
 | `settings.sound` | Bunyi tiap langkah | Step sound |
-| `settings.soundHint` | Bunyi saat ganti tahap di timer | Plays when the timer changes step |
+| `settings.soundHint` | Bunyi saat ganti tahap di timer. Keras pelannya ikut volume media HP. | Plays when the timer changes step. Loudness follows your phone's media volume. |
+| `settings.testSound` | Coba bunyi | Test sound |
 | `settings.vibrate` | Getar | Vibration |
 | `settings.vibrateHint` | HP bergetar saat ganti tahap | Phone vibrates on each step |
 | `settings.keepAwake` | Layar tetap menyala | Keep screen on |
