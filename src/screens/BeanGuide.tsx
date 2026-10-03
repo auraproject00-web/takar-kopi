@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { beanTempRange, PROCESSES, ROASTS, SPECIES, type BeanInfo, type RoastId } from '../data/beans'
 import { useI18n } from '../i18n/useI18n'
 import { useUnitFormat } from '../lib/units'
@@ -43,6 +44,9 @@ export default function BeanGuide() {
       <header className="flex flex-col gap-1.5 px-5 pt-7 pb-2">
         <h1 className="m-0 font-display text-[28px] font-bold">{t('beans.title')}</h1>
         <p className="m-0 text-sm leading-relaxed text-muted">{t('beans.intro')}</p>
+        <Link to="/cari-biji" className="flex min-h-11 items-center text-sm font-semibold text-accent">
+          {t('search.link')}
+        </Link>
       </header>
       <div className="flex flex-col gap-5 px-5 pt-2">
         <section className="flex flex-col gap-2">

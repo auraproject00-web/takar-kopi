@@ -57,9 +57,14 @@ export default function MethodSelect() {
           </section>
         )}
         <InstallHint />
-        <Link to="/gilingan" className="flex min-h-11 items-center text-sm font-semibold text-accent">
-          {t('grind.guide')}
-        </Link>
+        <div className="flex flex-col">
+          <Link to="/gilingan" className="flex min-h-11 items-center text-sm font-semibold text-accent">
+            {t('grind.guide')}
+          </Link>
+          <Link to="/cari-biji" className="flex min-h-11 items-center text-sm font-semibold text-accent">
+            {t('search.link')}
+          </Link>
+        </div>
       </div>
     </Screen>
   )

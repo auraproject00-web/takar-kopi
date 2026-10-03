@@ -11,6 +11,8 @@ import { getRecipe } from './lib/recipes'
 import { useApplyTheme } from './lib/theme'
 import Settings from './screens/Settings'
 import BeanGuide from './screens/BeanGuide'
+import BeanSearch from './screens/BeanSearch'
+import OriginDetail from './screens/OriginDetail'
 import Onboarding, { ONBOARDED_KEY } from './screens/Onboarding'
 import { usePersistentState } from './lib/usePersistentState'
 import NotFound from './screens/NotFound'
@@ -65,6 +67,8 @@ export default function App() {
       <Route path="/resep/baru" element={<NewRecipeRoute />} />
       <Route path="/resep/:recipeId/ubah" element={<EditRecipeRoute />} />
       <Route path="/beans" element={<BeanGuide />} />
+      <Route path="/cari-biji" element={<BeanSearch />} />
+      <Route path="/cari-biji/:originId" element={<OriginDetail />} />
       <Route path="/pengaturan" element={<Settings />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
