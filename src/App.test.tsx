@@ -104,20 +104,20 @@ describe('guided mode (Takaran)', () => {
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
     expect(screen.queryByRole('slider')).not.toBeInTheDocument()
 
-    // Default: one medium cup (250 ml) at normal 1:16 → 15.6 g
-    expect(screen.getByText('15.6')).toBeInTheDocument()
+    // Default: one medium cup (250 ml) at normal 1:16 → 15.6 g, rounded to 16 g
+    expect(screen.getByText('16')).toBeInTheDocument()
     expect(screen.getByText('250')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /Besar/ }))
     await user.click(screen.getByRole('button', { name: 'Tambah gelas' }))
-    // Two large cups: 700 ml at 1:16 → 43.8 g
+    // Two large cups: 700 ml at 1:16 → 43.75 g, rounded to 44 g
     expect(screen.getByText('700')).toBeInTheDocument()
-    expect(screen.getByText('43.8')).toBeInTheDocument()
+    expect(screen.getByText('44')).toBeInTheDocument()
     expect(screen.getByText('Untuk 2 × 350 ml')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /Pekat/ }))
-    // Strong is 1:15 → 46.7 g for the same 700 ml
-    expect(screen.getByText('46.7')).toBeInTheDocument()
+    // Strong is 1:15 → 46.7 g, rounded to 47 g, for the same 700 ml
+    expect(screen.getByText('47')).toBeInTheDocument()
   })
 
   it('caps the cup counter for the method', async () => {
@@ -159,8 +159,8 @@ describe('guided mode (Takaran)', () => {
     await user.click(screen.getByRole('button', { name: /Kecil/ }))
     await user.click(screen.getByRole('button', { name: /Ringan/ }))
     await user.click(screen.getByRole('link', { name: 'Mulai seduh' }))
-    // 150 ml at 1:17 → 8.8 g
-    expect(screen.getByText(/8.8 g · 150 ml/)).toBeInTheDocument()
+    // 150 ml at 1:17 → 8.8 g, rounded to 9 g; the timer still pours 150 ml
+    expect(screen.getByText(/9 g · 150 ml/)).toBeInTheDocument()
     await user.click(screen.getByRole('link', { name: 'Kembali ke kalkulator' }))
     expect(screen.getByRole('button', { name: /Kecil/ })).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('button', { name: /Ringan/ })).toHaveAttribute('aria-pressed', 'true')

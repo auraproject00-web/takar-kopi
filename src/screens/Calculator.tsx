@@ -19,7 +19,7 @@ import {
   type PourStyle,
 } from '../lib/brew'
 import { brewQuery, guidedQuery, readBrewParams, readGuidedChoice } from '../lib/brewParams'
-import { defaultChoice, guidedInput, PORTIONS, type GuidedChoice, type PortionSize, type SizeLabel, type Strength } from '../data/portions'
+import { defaultChoice, guidedAmounts, PORTIONS, type GuidedChoice, type PortionSize, type SizeLabel, type Strength } from '../data/portions'
 import { usePersistentState } from '../lib/usePersistentState'
 import { stepLabel } from '../lib/stepLabel'
 import { useUnitFormat, type UnitFormat } from '../lib/units'
@@ -80,9 +80,7 @@ export default function Calculator({ method }: { method: BrewMethod }) {
   let ratio: number
   let style: PourStyle
   if (mode === 'guided') {
-    const g = guidedInput(method, choice)
-    amounts = calcAmounts(method.kind, g.mode, g.amount, g.ratio)
-    ratio = g.ratio
+    ;({ amounts, ratio } = guidedAmounts(method, choice))
     style = 'standard'
   } else {
     const typed = parseInput(raw)

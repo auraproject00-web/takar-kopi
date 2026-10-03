@@ -1,5 +1,6 @@
 import type { MessageKey } from '../i18n/I18nProvider'
 import type { BrewMethod, MethodId } from './methods'
+import { calcAmounts, roundTo, type Amounts } from '../lib/brew'
 
 /**
  * Guided mode: the user picks a cup size, how many cups and a strength, and the
@@ -135,4 +136,17 @@ export function guidedInput(method: BrewMethod, choice: GuidedChoice) {
     amount: size.amount * c.count,
     ratio: p.ratios[c.strength],
   }
+}
+
+/**
+ * The guided result. Coffee is rounded to whole grams so it is easy to weigh,
+ * and the water stays exactly the chosen volume; the ratio passed on is the real
+ * one (e.g. 250 ml / 16 g = 1:15.625), so the timer and saved recipes keep 250 ml.
+ */
+export function guidedAmounts(method: BrewMethod, choice: GuidedChoice): { amounts: Amounts; ratio: number } {
+  const g = guidedInput(method, choice)
+  if (g.mode === 'coffee') return { amounts: calcAmounts(method.kind, 'coffee', g.amount, g.ratio), ratio: g.ratio }
+  const coffee = Math.max(1, Math.round(g.amount / g.ratio))
+  const ratio = roundTo(g.amount / coffee, 3)
+  return { amounts: calcAmounts(method.kind, 'coffee', coffee, ratio), ratio }
 }
