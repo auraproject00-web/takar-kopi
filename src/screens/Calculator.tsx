@@ -19,6 +19,7 @@ import {
 } from '../lib/brew'
 import { brewQuery, readBrewParams } from '../lib/brewParams'
 import { stepLabel } from '../lib/stepLabel'
+import { useUnitFormat, type UnitFormat } from '../lib/units'
 import { BackHeader, Card, Screen, SectionLabel } from '../components/layout'
 import { Segmented } from '../components/Segmented'
 import { GrindCard } from '../components/GrindCard'
@@ -40,11 +41,16 @@ export default function Calculator({ method }: { method: BrewMethod }) {
   const [initial] = useState(() => readBrewParams(method, search))
   const isEspresso = method.kind === 'espresso'
   const [mode, setMode] = useState<InputMode>('coffee')
-  const [raw, setRaw] = useState(formatNumber(initial.coffee))
+  const u = useUnitFormat()
+  // The input shows the display unit (g or oz); everything below works in grams and ml.
+  const [raw, setRaw] = useState(() => formatNumber(u.weight(initial.coffee), 2))
   const [ratio, setRatio] = useState(initial.ratio)
   const [style, setStyle] = useState<PourStyle>(initial.style)
 
-  const amounts = calcAmounts(method.kind, mode, parseInput(raw), ratio)
+  const typed = parseInput(raw)
+  const typedBase = mode === 'coffee' || isEspresso ? u.toGrams(typed) : u.toMl(typed)
+  const amounts = calcAmounts(method.kind, mode, typedBase, ratio)
+  const shownWater = isEspresso ? u.weight(amounts.water) : u.volume(amounts.water)
   const steps = brewSchedule(method, amounts.coffee, amounts.hotWater ?? amounts.water, style)
   const query = brewQuery({ coffee: amounts.coffee, ratio, style })
   const timerLink = `/seduh/${method.id}/timer${query}`
@@ -57,7 +63,7 @@ export default function Calculator({ method }: { method: BrewMethod }) {
 
   const coffeeLabel = isEspresso ? t('calc.dose') : t('calc.coffee')
   const waterLabel = isEspresso ? t('calc.yield') : t('calc.water')
-  const waterUnit = isEspresso ? t('unit.gram') : t('unit.ml')
+  const waterUnit = isEspresso ? u.weightLabel : u.volumeLabel
   const timeText =
     style === '46' && supportsPourStyle(method)
       ? formatClock(POUR_STYLE_46.end)
@@ -66,7 +72,7 @@ export default function Calculator({ method }: { method: BrewMethod }) {
   // Keep the numbers on screen when flipping which side is typed in.
   function switchMode(next: InputMode) {
     if (next === mode) return
-    setRaw(formatNumber(next === 'coffee' ? amounts.coffee : amounts.water))
+    setRaw(formatNumber(next === 'coffee' ? u.weight(amounts.coffee) : shownWater, 2))
     setMode(next)
   }
 
@@ -85,11 +91,11 @@ export default function Calculator({ method }: { method: BrewMethod }) {
     </label>
   )
   const outputCard = (label: string, unit: string, value: number) => (
-    <div className="flex flex-col gap-1.5 rounded-[14px] bg-ink p-3.5 text-white" aria-live="polite">
-      <span className="text-[13px] font-semibold text-line">
+    <div className="flex flex-col gap-1.5 rounded-[14px] bg-inverse p-3.5 text-on-inverse" aria-live="polite">
+      <span className="text-[13px] font-semibold text-on-inverse-muted">
         {label} ({unit})
       </span>
-      <output className="font-mono text-4xl">{formatNumber(value)}</output>
+      <output className="font-mono text-4xl">{formatNumber(value, 2)}</output>
     </div>
   )
 
@@ -111,8 +117,8 @@ export default function Calculator({ method }: { method: BrewMethod }) {
         </div>
 
         <div className="grid grid-cols-2 gap-2.5">
-          {mode === 'coffee' ? inputCard(coffeeLabel, t('unit.gram')) : outputCard(coffeeLabel, t('unit.gram'), amounts.coffee)}
-          {mode === 'water' ? inputCard(waterLabel, waterUnit) : outputCard(waterLabel, waterUnit, amounts.water)}
+          {mode === 'coffee' ? inputCard(coffeeLabel, u.weightLabel) : outputCard(coffeeLabel, u.weightLabel, u.weight(amounts.coffee))}
+          {mode === 'water' ? inputCard(waterLabel, waterUnit) : outputCard(waterLabel, waterUnit, shownWater)}
         </div>
 
         {amounts.hotWater !== undefined && amounts.ice !== undefined && (
@@ -120,13 +126,13 @@ export default function Calculator({ method }: { method: BrewMethod }) {
             <div className="flex flex-col gap-0.5 p-3">
               <span className="text-xs text-muted">{t('calc.hotWater')}</span>
               <span className="font-mono">
-                {amounts.hotWater} {t('unit.ml')}
+                {u.fmtVolume(amounts.hotWater)}
               </span>
             </div>
             <div className="flex flex-col gap-0.5 p-3">
               <span className="text-xs text-muted">{t('calc.ice')}</span>
               <span className="font-mono">
-                {amounts.ice} {t('unit.gram')}
+                {u.fmtWeight(amounts.ice)}
               </span>
             </div>
           </Card>
@@ -156,7 +162,7 @@ export default function Calculator({ method }: { method: BrewMethod }) {
           <Card className="flex flex-col gap-0.5 p-3">
             <span className="text-xs text-muted">{t('calc.temperature')}</span>
             <span className={method.tempC !== null ? 'font-mono' : 'text-sm font-semibold'}>
-              {method.tempC !== null ? `${method.tempC}${t('unit.celsius')}` : method.tempNoteKey && t(method.tempNoteKey)}
+              {method.tempC !== null ? u.fmtTemp(method.tempC) : method.tempNoteKey && t(method.tempNoteKey)}
             </span>
           </Card>
           <Card className="flex flex-col gap-0.5 p-3">
@@ -189,14 +195,14 @@ export default function Calculator({ method }: { method: BrewMethod }) {
           </div>
         )}
 
-        {steps.length > 0 && <Schedule steps={steps} methodId={method.id} />}
+        {steps.length > 0 && <Schedule steps={steps} methodId={method.id} units={u} />}
 
         <Tip method={method} timeText={timeText} />
 
         {steps.length > 0 && amounts.coffee > 0 && (
           <Link
             to={timerLink}
-            className="flex h-[54px] items-center justify-center rounded-[14px] bg-accent text-base font-semibold text-white no-underline hover:bg-accent-hover"
+            className="flex h-[54px] items-center justify-center rounded-[14px] bg-accent text-base font-semibold text-on-accent no-underline hover:bg-accent-hover"
           >
             {t('calc.startBrew')}
           </Link>
@@ -211,7 +217,7 @@ export default function Calculator({ method }: { method: BrewMethod }) {
   )
 }
 
-function Schedule({ steps, methodId }: { steps: BrewStep[]; methodId: MethodId }) {
+function Schedule({ steps, methodId, units }: { steps: BrewStep[]; methodId: MethodId; units: UnitFormat }) {
   const { t } = useI18n()
   const label = (s: BrewStep) => stepLabel(t, s, methodId)
   return (
@@ -226,7 +232,7 @@ function Schedule({ steps, methodId }: { steps: BrewStep[]; methodId: MethodId }
             >
               <span className="font-mono text-muted">{formatClock(s.atSec)}</span>
               <span className="font-medium">{label(s)}</span>
-              <span className="text-right font-mono">{s.targetG !== undefined ? `${s.targetG} ${t('unit.gram')}` : ''}</span>
+              <span className="text-right font-mono">{s.targetG !== undefined ? units.fmtWeight(s.targetG) : ''}</span>
             </li>
           ))}
         </ol>

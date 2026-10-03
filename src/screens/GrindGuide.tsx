@@ -45,7 +45,7 @@ export default function GrindGuide() {
                 const [min, max] = grinder.clicks[m.id]
                 const current = m.id === fromMethod?.id
                 return (
-                  <tr key={m.id} className={current ? 'bg-accent-soft/30' : undefined} aria-current={current ? 'true' : undefined}>
+                  <tr key={m.id} className={current ? 'bg-accent/15' : undefined} aria-current={current ? 'true' : undefined}>
                     <th scope="row" className="border-b border-line-soft px-3.5 py-3 text-left font-semibold">
                       {t(m.nameKey)}
                     </th>

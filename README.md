@@ -2,7 +2,7 @@
 
 Aplikasi web (PWA) untuk menghitung takaran kopi manual brew, espresso, dan metode seduh lainnya, lengkap dengan timer seduh bertahap dan penyimpanan resep.
 
-> Status: **Sprint 3 selesai**: kalkulator takaran, panduan gilingan, timer seduh bertahap (termasuk 4:6), simpan resep, bisa di-install dan dipakai offline, dua bahasa.
+> Status: **Sprint 4 selesai, siap beta (v0.9.0)**: kalkulator takaran, panduan gilingan, timer seduh bertahap (termasuk 4:6), simpan resep, offline & bisa di-install, pengaturan (satuan g/oz, ml/fl oz, °C/°F), dark mode, onboarding, dua bahasa.
 
 ## Menjalankan di komputer
 

@@ -32,7 +32,7 @@ export function RatingInput({ value, onChange }: { value: number; onChange: (val
           aria-label={value === n ? t('recipe.clearRating') : t('recipe.ratingStar', { n })}
           aria-pressed={n <= value}
           onClick={() => onChange(value === n ? 0 : n)}
-          className={`flex size-11 items-center justify-center ${n <= value ? 'text-accent' : 'text-[#8c877f]'}`}
+          className={`flex size-11 items-center justify-center ${n <= value ? 'text-accent' : 'text-faint'}`}
         >
           <StarIcon filled={n <= value} size={28} />
         </button>

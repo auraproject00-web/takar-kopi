@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useSearchParams } from 'react-router-dom'
 import type { BrewMethod } from '../data/methods'
 import { useI18n } from '../i18n/useI18n'
-import { brewEndSec, brewSchedule, calcAmounts, formatClock, formatNumber } from '../lib/brew'
+import { brewEndSec, brewSchedule, calcAmounts, formatClock } from '../lib/brew'
 import { brewQuery, readBrewParams } from '../lib/brewParams'
 import { beep, buzz, canBuzz, unlockAudio } from '../lib/cues'
 import { stepLabel } from '../lib/stepLabel'
@@ -10,6 +10,7 @@ import { currentStepIndex, nextStepMs } from '../lib/timer'
 import { useBrewTimer } from '../lib/useBrewTimer'
 import { usePersistentState } from '../lib/usePersistentState'
 import { useWakeLock } from '../lib/useWakeLock'
+import { useUnitFormat } from '../lib/units'
 
 export default function Timer({ method }: { method: BrewMethod }) {
   const { t } = useI18n()
@@ -22,6 +23,8 @@ export default function Timer({ method }: { method: BrewMethod }) {
   const timer = useBrewTimer(endSec * 1000)
   const [sound, setSound] = usePersistentState('cb.sound', true)
   const [vibrate, setVibrate] = usePersistentState('cb.vibrate', true)
+  const [keepAwake] = usePersistentState('cb.keepAwake', true)
+  const u = useUnitFormat()
   const [buzzSupported] = useState(canBuzz)
   const flashRef = useRef<HTMLDivElement>(null)
   const calcLink = `/seduh/${method.id}${brewQuery(params)}`
@@ -34,7 +37,7 @@ export default function Timer({ method }: { method: BrewMethod }) {
   const next = steps[index + 1]
   const done = timer.status === 'done'
 
-  useWakeLock(timer.status === 'running')
+  useWakeLock(keepAwake && timer.status === 'running')
 
   // Signal each step change, and the end, while the timer is running.
   const lastSignalled = useRef(-1)
@@ -57,17 +60,17 @@ export default function Timer({ method }: { method: BrewMethod }) {
   if (steps.length === 0) return <Navigate to={calcLink} replace />
 
   const progress = Math.min(100, (elapsedSec / endSec) * 100)
-  const tempText = method.tempC !== null ? ` · ${method.tempC}${t('unit.celsius')}` : ''
+  const tempText = method.tempC !== null ? ` · ${u.fmtTemp(method.tempC)}` : ''
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-ink text-white">
+    <main className="light-tokens mx-auto flex min-h-dvh w-full max-w-md flex-col bg-ink text-white">
       <div ref={flashRef} aria-hidden="true" className="pointer-events-none fixed inset-0 z-10 bg-[#e08a3c] opacity-0" />
       <header className="flex items-center justify-between py-5 pr-3 pl-5">
         <div className="flex flex-col gap-0.5">
           <h1 className="m-0 font-display text-xl font-bold">{t(method.nameKey)}</h1>
           <span className="font-mono text-[13px] text-field">
-            {formatNumber(amounts.coffee)} {t('unit.gram')} · {amounts.water} {t('unit.ml')}
-            {amounts.ice !== undefined && ` (${amounts.ice} ${t('unit.gram')} ${t('method.ice')})`}
+            {u.fmtWeight(amounts.coffee)} · {u.fmtVolume(amounts.water)}
+            {amounts.ice !== undefined && ` (${u.fmtWeight(amounts.ice)} ${t('method.ice')})`}
             {tempText}
           </span>
         </div>
@@ -95,7 +98,7 @@ export default function Timer({ method }: { method: BrewMethod }) {
             : !started
               ? t('timer.ready')
               : step?.targetG !== undefined
-                ? t('timer.pourTo', { grams: step.targetG })
+                ? t('timer.pourTo', { amount: u.fmtWeight(step.targetG) })
                 : next
                   ? t('timer.nextIn', { step: stepLabel(t, next, method.id), time: formatClock(next.atSec - elapsedSec) })
                   : ''}
@@ -137,7 +140,7 @@ export default function Timer({ method }: { method: BrewMethod }) {
             >
               <span className="font-mono text-[13px]">{formatClock(s.atSec)}</span>
               <span className="font-medium">{stepLabel(t, s, method.id)}</span>
-              <span className="text-right font-mono">{s.targetG !== undefined ? `${s.targetG} ${t('unit.gram')}` : '—'}</span>
+              <span className="text-right font-mono">{s.targetG !== undefined ? u.fmtWeight(s.targetG) : '—'}</span>
             </li>
           )
         })}
@@ -164,7 +167,7 @@ export default function Timer({ method }: { method: BrewMethod }) {
           {buzzSupported && <Toggle on={vibrate} onChange={setVibrate} label={t('timer.vibrate')} />}
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 

@@ -5,6 +5,7 @@ import { brewLink, brewSummary } from '../lib/recipeView'
 import { METHODS, type BrewMethod } from '../data/methods'
 import { formatRatio, ICE_SHARE } from '../lib/brew'
 import { useI18n } from '../i18n/useI18n'
+import { useUnitFormat } from '../lib/units'
 import { Screen } from '../components/layout'
 import { LangToggle } from '../components/LangToggle'
 import { InstallHint } from '../components/InstallHint'
@@ -17,6 +18,7 @@ function ratioLabel(method: BrewMethod, iceWord: string): string {
 
 export default function MethodSelect() {
   const { t } = useI18n()
+  const u = useUnitFormat()
   const recent = useLiveQuery(() => db.recipes.orderBy('updatedAt').last())
   return (
     <Screen nav>
@@ -44,13 +46,13 @@ export default function MethodSelect() {
             <h2 className="m-0 text-[13px] font-semibold tracking-wide text-muted uppercase">{t('method.recent')}</h2>
             <Link
               to={brewLink(recent)}
-              className="flex items-center justify-between gap-3 rounded-[14px] bg-ink px-4 py-3.5 text-white no-underline"
+              className="flex items-center justify-between gap-3 rounded-[14px] bg-inverse px-4 py-3.5 text-on-inverse no-underline"
             >
               <span className="flex min-w-0 flex-col gap-0.5">
                 <span className="truncate text-[15px] font-semibold">{recent.name}</span>
-                <span className="font-mono text-xs text-line">{brewSummary(t, recent)}</span>
+                <span className="font-mono text-xs text-on-inverse-muted">{brewSummary(recent, u)}</span>
               </span>
-              <span className="shrink-0 text-sm font-semibold text-accent-soft">{t('method.brewAgain')}</span>
+              <span className="shrink-0 text-sm font-semibold text-on-inverse-accent">{t('method.brewAgain')}</span>
             </Link>
           </section>
         )}

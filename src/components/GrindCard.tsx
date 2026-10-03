@@ -62,15 +62,15 @@ export function GrindCard({ method }: { method: BrewMethod }) {
       </select>
 
       {grinder ? (
-        <div className="flex flex-col gap-1 rounded-xl bg-ink px-3.5 py-3 text-white">
+        <div className="flex flex-col gap-1 rounded-xl bg-inverse px-3.5 py-3 text-on-inverse">
           <div className="flex items-center justify-between">
-            <span className="text-[13px] text-line">{t('grind.setTo')}</span>
+            <span className="text-[13px] text-on-inverse-muted">{t('grind.setTo')}</span>
             <span className="font-mono text-[22px]" data-testid="clicks">
               {grinder.clicks[method.id][0]}–{grinder.clicks[method.id][1]} {t('unit.clicks')}
             </span>
           </div>
           {grinder.clicksPerRotation && (
-            <span className="text-right font-mono text-xs text-line">
+            <span className="text-right font-mono text-xs text-on-inverse-muted">
               {toRotationNotation(grinder.clicks[method.id][0], grinder.clicksPerRotation)} –{' '}
               {toRotationNotation(grinder.clicks[method.id][1], grinder.clicksPerRotation)} ·{' '}
               {t('grind.rotations', { n: grinder.clicksPerRotation })}
@@ -78,8 +78,8 @@ export function GrindCard({ method }: { method: BrewMethod }) {
           )}
         </div>
       ) : (
-        <label className="flex items-center justify-between gap-3 rounded-xl bg-ink py-2 pr-2 pl-3.5 text-white">
-          <span className="text-[13px] text-line">{t('grind.yourClicks', { method: methodName })}</span>
+        <label className="flex items-center justify-between gap-3 rounded-xl bg-inverse py-2 pr-2 pl-3.5 text-on-inverse">
+          <span className="text-[13px] text-on-inverse-muted">{t('grind.yourClicks', { method: methodName })}</span>
           <input
             type="text"
             inputMode="numeric"

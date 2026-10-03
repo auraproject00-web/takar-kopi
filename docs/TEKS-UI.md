@@ -114,7 +114,7 @@ Aturan gaya:
 | Kunci | Indonesia | English |
 |---|---|---|
 | `timer.stepOf` | {step} dari {total} | {step} of {total} |
-| `timer.pourTo` | Tuang sampai {grams} g | Pour to {grams} g |
+| `timer.pourTo` | Tuang sampai {amount} | Pour to {amount} |
 | `timer.bloom` | Bloom | Bloom |
 | `timer.pour` | Tuang {n} | Pour {n} |
 | `timer.wait` | Tunggu | Wait |
@@ -258,3 +258,23 @@ Aturan gaya:
 | `install.button` | Pasang | Install |
 | `install.dismiss` | Nanti saja | Not now |
 | `pwa.reload` | Muat ulang | Reload |
+
+## Tambahan Sprint 4
+
+| Kunci | Indonesia | English |
+|---|---|---|
+| `settings.more` | Lainnya | More |
+| `settings.intro` | Lihat pengenalan lagi | Show the intro again |
+| `settings.feedback` | Kirim masukan | Send feedback |
+| `settings.backupHere` | Ekspor & impor cadangan resep ada di tab Resep. | Recipe backup export & import live in the Recipes tab. |
+| `onboarding.label` | Pengenalan | Intro |
+| `onboarding.1.title` | Takaran pas, tanpa hitung manual | The right dose, no mental math |
+| `onboarding.1.body` | Pilih metode seduh, isi gram kopi atau ml air, dan sisanya dihitung otomatis, termasuk klik grinder. | Pick a brew method, enter coffee or water, and the rest is worked out for you, grinder clicks included. |
+| `onboarding.2.title` | Timer yang memandu tiap tuangan | A timer that guides every pour |
+| `onboarding.2.body` | Bunyi dan kedip layar memberi tahu kapan menuang dan sampai berapa gram. | A beep and a screen flash tell you when to pour and to how many grams. |
+| `onboarding.3.title` | Simpan resep favoritmu | Keep your favourite recipes |
+| `onboarding.3.body` | Resep tersimpan di HP ini, dan semua fitur tetap jalan tanpa internet. | Recipes stay on this phone, and everything keeps working offline. |
+| `onboarding.next` | Lanjut | Next |
+| `onboarding.skip` | Lewati | Skip |
+| `onboarding.start` | Mulai | Get started |
+| `onboarding.step` | {n} dari {total} | {n} of {total} |

@@ -33,7 +33,7 @@ export function Segmented<T extends string>({
             aria-pressed={on}
             onClick={() => onChange(o.value)}
             className={`min-h-10 rounded-[9px] px-2 text-sm font-semibold ${
-              on ? 'bg-ink text-white' : 'bg-transparent text-ink'
+              on ? 'bg-inverse text-on-inverse' : 'bg-transparent text-ink'
             }`}
           >
             {o.label}
