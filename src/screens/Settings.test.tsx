@@ -119,11 +119,10 @@ describe('settings', () => {
     expect(localStorage.getItem('cb.keepAwake')).toBe('false')
   })
 
-  it('links to the beta feedback form in a new tab', () => {
+  it('hides feedback until the Google Form question ids are configured', () => {
     renderAt('/pengaturan')
-    const link = screen.getByRole('link', { name: 'Kirim masukan' })
-    expect(link).toHaveAttribute('href', expect.stringContaining('docs.google.com/forms/'))
-    expect(link).toHaveAttribute('target', '_blank')
+    expect(screen.queryByRole('button', { name: 'Kirim masukan' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Kirim masukan' })).not.toBeInTheDocument()
   })
 
   it('shows the app version', () => {

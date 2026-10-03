@@ -220,5 +220,15 @@
   "strength.label": "Kekuatan",
   "strength.light": "Ringan",
   "strength.normal": "Normal",
-  "strength.strong": "Pekat"
+  "strength.strong": "Pekat",
+  "feedback.intro": "Ceritakan apa yang bisa dibuat lebih baik. Langsung terkirim ke tim, tanpa keluar dari aplikasi.",
+  "feedback.device": "Perangkat",
+  "feedback.message": "Saran atau masalah",
+  "feedback.placeholder": "Mis. takaran Chemex kurang pas, atau tombol timer susah ditekan…",
+  "feedback.send": "Kirim",
+  "feedback.sending": "Mengirim…",
+  "feedback.sent": "Terima kasih! Masukanmu sudah terkirim.",
+  "feedback.queued": "Kamu sedang offline. Masukan disimpan dan akan terkirim otomatis saat online.",
+  "feedback.empty": "Tulis saranmu dulu, ya.",
+  "feedback.another": "Kirim masukan lain"
 }

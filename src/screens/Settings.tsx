@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { APP_VERSION, FEEDBACK_URL } from '../config'
+import { APP_VERSION, FEEDBACK_ENABLED } from '../config'
+import { FeedbackForm } from '../components/FeedbackForm'
 import { GRINDERS, type GrinderId } from '../data/grinders'
 import type { Lang } from '../i18n/I18nProvider'
 import { useI18n } from '../i18n/useI18n'
@@ -50,6 +51,7 @@ export default function Settings() {
   const [vibrate, setVibrate] = usePersistentState('cb.vibrate', true)
   const [keepAwake, setKeepAwake] = usePersistentState('cb.keepAwake', true)
   const [buzzSupported] = useState(canBuzz)
+  const [feedbackOpen, setFeedbackOpen] = useState(false)
   const setUnit = <K extends keyof Units>(key: K, value: Units[K]) => setUnits({ ...units, [key]: value })
 
   return (
@@ -162,10 +164,26 @@ export default function Settings() {
             <Link to="/resep" className="flex min-h-12 items-center border-b border-line-soft text-sm text-muted last:border-b-0">
               {t('settings.backupHere')}
             </Link>
-            {FEEDBACK_URL && (
-              <a href={FEEDBACK_URL} target="_blank" rel="noreferrer" className="flex min-h-12 items-center font-semibold text-accent">
-                {t('settings.feedback')}
-              </a>
+            {FEEDBACK_ENABLED && (
+              <div>
+                <button
+                  type="button"
+                  aria-expanded={feedbackOpen}
+                  aria-controls="feedback-panel"
+                  onClick={() => setFeedbackOpen(!feedbackOpen)}
+                  className="flex min-h-12 w-full items-center justify-between text-left font-semibold text-accent"
+                >
+                  {t('settings.feedback')}
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true" className={feedbackOpen ? 'rotate-180' : ''}>
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
+                {feedbackOpen && (
+                  <div id="feedback-panel">
+                    <FeedbackForm />
+                  </div>
+                )}
+              </div>
             )}
           </Card>
         </section>
