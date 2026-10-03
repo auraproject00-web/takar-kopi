@@ -306,3 +306,18 @@ Aturan gaya:
 | `strength.light` | Ringan | Light |
 | `strength.normal` | Normal | Normal |
 | `strength.strong` | Pekat | Strong |
+
+## Tambahan beta: masukan di dalam aplikasi
+
+| Kunci | Indonesia | English |
+|---|---|---|
+| `feedback.intro` | Ceritakan apa yang bisa dibuat lebih baik. Langsung terkirim ke tim, tanpa keluar dari aplikasi. | Tell us what could be better. It goes straight to the team without leaving the app. |
+| `feedback.device` | Perangkat | Device |
+| `feedback.message` | Saran atau masalah | Suggestion or issue |
+| `feedback.placeholder` | Mis. takaran Chemex kurang pas, atau tombol timer susah ditekan… | E.g. the Chemex dose feels off, or the timer button is hard to tap… |
+| `feedback.send` | Kirim | Send |
+| `feedback.sending` | Mengirim… | Sending… |
+| `feedback.sent` | Terima kasih! Masukanmu sudah terkirim. | Thank you! Your feedback was sent. |
+| `feedback.queued` | Kamu sedang offline. Masukan disimpan dan akan terkirim otomatis saat online. | You're offline. Your feedback is saved and will send automatically when you're back online. |
+| `feedback.empty` | Tulis saranmu dulu, ya. | Please write your feedback first. |
+| `feedback.another` | Kirim masukan lain | Send another |

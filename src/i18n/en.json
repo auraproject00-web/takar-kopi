@@ -220,5 +220,15 @@
   "strength.label": "Strength",
   "strength.light": "Light",
   "strength.normal": "Normal",
-  "strength.strong": "Strong"
+  "strength.strong": "Strong",
+  "feedback.intro": "Tell us what could be better. It goes straight to the team without leaving the app.",
+  "feedback.device": "Device",
+  "feedback.message": "Suggestion or issue",
+  "feedback.placeholder": "E.g. the Chemex dose feels off, or the timer button is hard to tap…",
+  "feedback.send": "Send",
+  "feedback.sending": "Sending…",
+  "feedback.sent": "Thank you! Your feedback was sent.",
+  "feedback.queued": "You're offline. Your feedback is saved and will send automatically when you're back online.",
+  "feedback.empty": "Please write your feedback first.",
+  "feedback.another": "Send another"
 }
