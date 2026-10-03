@@ -406,3 +406,43 @@ Aturan gaya:
 | `calc.step.reset` | Kembali ke jadwal bawaan | Back to the default schedule |
 | `grind.noClicks` | Belum ada data klik grinder untuk gilingan ini. | No grinder click data for this grind yet. |
 | `recipe.ownSchedule` | Jadwal sendiri | Own schedule |
+
+## Tambahan: cari biji kopi
+
+| Kunci | Indonesia | English |
+|---|---|---|
+| `search.link` | Cari biji kopi | Find coffee beans |
+| `search.title` | Cari biji kopi | Find coffee beans |
+| `search.label` | Cari origin, daerah, atau varietas | Search by origin, region or variety |
+| `search.placeholder` | Mis. Gayo, Kintamani, Ethiopia… | E.g. Gayo, Kintamani, Ethiopia… |
+| `search.hint` | {n} origin di database bawaan, bisa dipakai offline. | {n} origins in the built-in database, works offline. |
+| `search.results` | {n} hasil | {n} results |
+| `search.none` | "{q}" belum ada di database kami. Coba nama daerah, negara, atau varietasnya. | "{q}" isn't in our database yet. Try the region, country or variety. |
+| `island.sumatra` | Sumatra | Sumatra |
+| `island.java` | Jawa | Java |
+| `island.baliNusa` | Bali & Nusa Tenggara | Bali & Nusa Tenggara |
+| `island.sulawesi` | Sulawesi | Sulawesi |
+| `island.kalimantan` | Kalimantan | Kalimantan |
+| `island.papua` | Papua | Papua |
+| `search.world` | Mancanegara | Rest of the world |
+| `search.jump` | Lompat ke | Jump to |
+| `origin.country` | Negara | Country |
+| `origin.region` | Wilayah | Region |
+| `origin.altitude` | Ketinggian | Altitude |
+| `origin.altitudeValue` | {m} mdpl | {m} m above sea level |
+| `origin.species` | Jenis | Species |
+| `origin.varieties` | Varietas | Varieties |
+| `origin.body` | Body | Body |
+| `origin.acidity` | Keasaman | Acidity |
+| `origin.body.low` | Ringan | Light |
+| `origin.body.medium` | Sedang | Medium |
+| `origin.body.high` | Tebal | Heavy |
+| `origin.acidity.low` | Rendah | Low |
+| `origin.acidity.medium` | Sedang | Medium |
+| `origin.acidity.high` | Tinggi | High |
+| `origin.byProcess` | Taste notes per proses | Taste notes by process |
+| `origin.common` | Paling umum | Most common |
+| `origin.use` | Pakai untuk seduh | Use for brewing |
+| `origin.inUse` | Dipakai untuk seduh | Used for brewing |
+| `origin.disclaimer` | Gambaran umum. Rasa tiap kebun, panen, dan roastery bisa beda. | A general picture. Every farm, harvest and roastery tastes a little different. |
+| `origin.notFound` | Origin tidak ditemukan | Origin not found |
