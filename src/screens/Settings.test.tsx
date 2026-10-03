@@ -92,6 +92,7 @@ describe('settings', () => {
     localStorage.setItem('cb.units', JSON.stringify({ weight: 'oz', volume: 'ml', temp: 'c' }))
     const user = userEvent.setup()
     renderAt('/seduh/v60')
+    await user.click(screen.getByRole('button', { name: 'Eksperimen' }))
     const coffee = screen.getByRole('textbox', { name: /Kopi \(oz\)/ })
     await user.clear(coffee)
     await user.type(coffee, '1')

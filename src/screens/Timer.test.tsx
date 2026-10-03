@@ -117,6 +117,7 @@ describe('calculator ↔ timer', () => {
   it('opens the timer with the calculated amounts', async () => {
     const user = userEvent.setup()
     renderAt('/seduh/v60')
+    await user.click(screen.getByRole('button', { name: 'Eksperimen' }))
     const coffee = screen.getByRole('textbox', { name: /Kopi/ })
     await user.clear(coffee)
     await user.type(coffee, '18')

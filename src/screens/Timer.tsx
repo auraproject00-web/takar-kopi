@@ -27,7 +27,9 @@ export default function Timer({ method }: { method: BrewMethod }) {
   const u = useUnitFormat()
   const [buzzSupported] = useState(canBuzz)
   const flashRef = useRef<HTMLDivElement>(null)
-  const calcLink = `/seduh/${method.id}${brewQuery(params)}`
+  // Keep the whole query (including a guided size/cups/strength) so the calculator reopens as it was.
+  const backQuery = search.toString() ? `?${search.toString()}` : brewQuery(params)
+  const calcLink = `/seduh/${method.id}${backQuery}`
   const saveLink = `/resep/baru${brewQuery(params)}&metode=${method.id}`
 
   const elapsedSec = timer.elapsedMs / 1000

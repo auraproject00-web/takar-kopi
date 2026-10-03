@@ -278,3 +278,31 @@ Aturan gaya:
 | `onboarding.skip` | Lewati | Skip |
 | `onboarding.start` | Mulai | Get started |
 | `onboarding.step` | {n} dari {total} | {n} of {total} |
+
+## Tambahan beta: mode Takaran
+
+| Kunci | Indonesia | English |
+|---|---|---|
+| `calc.mode.label` | Mode kalkulator | Calculator mode |
+| `calc.mode.guided` | Takaran | Guided |
+| `calc.mode.custom` | Eksperimen | Experiment |
+| `calc.guidedHint` | Pilih ukuran dan kekuatan, takarannya kami hitungkan. | Pick a size and strength, and we work out the dose. |
+| `calc.customHint` | Atur sendiri gram kopi, air, dan ratio. | Set the coffee, water and ratio yourself. |
+| `calc.size` | Ukuran gelas | Cup size |
+| `calc.size.espresso` | Shot | Shot |
+| `calc.size.moka` | Ukuran moka pot | Moka pot size |
+| `calc.size.batch` | Jumlah seduhan | Batch size |
+| `calc.count` | Jumlah gelas | Number of cups |
+| `calc.countLess` | Kurangi gelas | Fewer cups |
+| `calc.countMore` | Tambah gelas | More cups |
+| `calc.forCups` | Untuk {n} × {size} | For {n} × {size} |
+| `portion.small` | Kecil | Small |
+| `portion.medium` | Sedang | Medium |
+| `portion.large` | Besar | Large |
+| `portion.single` | Single | Single |
+| `portion.double` | Double | Double |
+| `portion.cup` | {n} cup | {n} cup |
+| `strength.label` | Kekuatan | Strength |
+| `strength.light` | Ringan | Light |
+| `strength.normal` | Normal | Normal |
+| `strength.strong` | Pekat | Strong |

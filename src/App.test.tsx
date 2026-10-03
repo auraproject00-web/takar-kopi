@@ -37,6 +37,7 @@ describe('app', () => {
   it('recalculates water as coffee is typed', async () => {
     const user = userEvent.setup()
     renderAt('/seduh/v60')
+    await user.click(screen.getByRole('button', { name: 'Eksperimen' }))
     const coffee = screen.getByRole('textbox', { name: /Kopi/ })
     expect(screen.getByText('240')).toBeInTheDocument()
     await user.clear(coffee)
@@ -47,6 +48,7 @@ describe('app', () => {
   it('calculates coffee from water after switching the input side', async () => {
     const user = userEvent.setup()
     renderAt('/seduh/v60')
+    await user.click(screen.getByRole('button', { name: 'Eksperimen' }))
     await user.click(screen.getByRole('button', { name: 'Air' }))
     const water = screen.getByRole('textbox', { name: /Air/ })
     expect(water).toHaveValue('240')
@@ -56,7 +58,7 @@ describe('app', () => {
   })
 
   it('shows hot water and ice for Japanese iced', () => {
-    renderAt('/seduh/japaneseIced')
+    renderAt('/seduh/japaneseIced?kopi=20&rasio=15')
     expect(screen.getByText('180 ml')).toBeInTheDocument()
     expect(screen.getByText('120 g')).toBeInTheDocument()
   })
@@ -90,5 +92,77 @@ describe('app', () => {
     expect(screen.getAllByRole('row')).toHaveLength(10)
     await user.click(screen.getByRole('button', { name: 'Hario Skerton' }))
     expect(screen.getByRole('row', { name: /Chemex/ })).toHaveTextContent('9–11')
+  })
+})
+
+describe('guided mode (Takaran)', () => {
+  it('opens by default and sets the dose from cup size, cups and strength', async () => {
+    const user = userEvent.setup()
+    renderAt('/seduh/v60')
+    expect(screen.getByRole('button', { name: 'Takaran' })).toHaveAttribute('aria-pressed', 'true')
+    // No typing in guided mode: the numbers are shown, not edited.
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
+    expect(screen.queryByRole('slider')).not.toBeInTheDocument()
+
+    // Default: one medium cup (250 ml) at normal 1:16 → 15.6 g, rounded to 16 g
+    expect(screen.getByText('16')).toBeInTheDocument()
+    expect(screen.getByText('250')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /Besar/ }))
+    await user.click(screen.getByRole('button', { name: 'Tambah gelas' }))
+    // Two large cups: 700 ml at 1:16 → 43.75 g, rounded to 44 g
+    expect(screen.getByText('700')).toBeInTheDocument()
+    expect(screen.getByText('44')).toBeInTheDocument()
+    expect(screen.getByText('Untuk 2 × 350 ml')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /Pekat/ }))
+    // Strong is 1:15 → 46.7 g, rounded to 47 g, for the same 700 ml
+    expect(screen.getByText('47')).toBeInTheDocument()
+  })
+
+  it('caps the cup counter for the method', async () => {
+    const user = userEvent.setup()
+    renderAt('/seduh/v60')
+    const more = screen.getByRole('button', { name: 'Tambah gelas' })
+    await user.click(more)
+    await user.click(more)
+    expect(more).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Kurangi gelas' })).toBeEnabled()
+  })
+
+  it('has no cup counter where one brew makes one cup (AeroPress, espresso)', () => {
+    renderAt('/seduh/espresso')
+    expect(screen.queryByRole('button', { name: 'Tambah gelas' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Double/ })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByText('36')).toBeInTheDocument()
+  })
+
+  it('remembers the last tab used', async () => {
+    const user = userEvent.setup()
+    const { unmount } = renderAt('/seduh/v60')
+    await user.click(screen.getByRole('button', { name: 'Eksperimen' }))
+    unmount()
+    renderAt('/seduh/chemex')
+    expect(screen.getByRole('button', { name: 'Eksperimen' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('textbox', { name: /Kopi/ })).toBeInTheDocument()
+  })
+
+  it('opens saved recipes with exact numbers in Eksperimen, without changing the remembered tab', () => {
+    renderAt('/seduh/v60?kopi=18&rasio=15')
+    expect(screen.getByRole('textbox', { name: /Kopi/ })).toHaveValue('18')
+    expect(localStorage.getItem('cb.calcMode')).toBeNull()
+  })
+
+  it('round-trips the guided choice through the timer', async () => {
+    const user = userEvent.setup()
+    renderAt('/seduh/v60')
+    await user.click(screen.getByRole('button', { name: /Kecil/ }))
+    await user.click(screen.getByRole('button', { name: /Ringan/ }))
+    await user.click(screen.getByRole('link', { name: 'Mulai seduh' }))
+    // 150 ml at 1:17 → 8.8 g, rounded to 9 g; the timer still pours 150 ml
+    expect(screen.getByText(/9 g · 150 ml/)).toBeInTheDocument()
+    await user.click(screen.getByRole('link', { name: 'Kembali ke kalkulator' }))
+    expect(screen.getByRole('button', { name: /Kecil/ })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: /Ringan/ })).toHaveAttribute('aria-pressed', 'true')
   })
 })
