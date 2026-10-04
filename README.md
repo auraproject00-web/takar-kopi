@@ -2,7 +2,7 @@
 
 Aplikasi web (PWA) untuk menghitung takaran kopi manual brew, espresso, dan metode seduh lainnya, lengkap dengan timer seduh bertahap dan penyimpanan resep.
 
-> Status: **Sprint 4 selesai, siap beta (v0.9.0)**: kalkulator takaran, panduan gilingan, timer seduh bertahap (termasuk 4:6), simpan resep, offline & bisa di-install, pengaturan (satuan g/oz, ml/fl oz, °C/°F), dark mode, onboarding, dua bahasa.
+> Status: **v1.0.0 rilis**. Lihat [CHANGELOG.md](CHANGELOG.md) untuk daftar fitur lengkap.
 
 ## Menjalankan di komputer
 
@@ -20,7 +20,7 @@ npm run build      # build produksi ke folder dist/
 
 | Folder | Isi |
 |---|---|
-| `src/data/` | Data metode seduh, level gilingan, dan klik grinder |
+| `src/data/` | Data metode seduh, porsi, level gilingan, klik grinder, beans, dan origin kopi |
 | `src/lib/brew.ts` | Rumus takaran & jadwal tuang (murni, ada unit test) |
 | `src/lib/timer.ts` | Logika timer seduh berbasis jam |
 | `src/lib/recipes.ts` | Database resep di perangkat (IndexedDB via Dexie) + cadangan JSON |
@@ -47,6 +47,8 @@ npm run build      # build produksi ke folder dist/
 4. **Timer seduh bertahap**: bloom → tuangan berikutnya, dengan target berat kumulatif
 5. **Simpan resep**: nama, biji kopi, roastery, catatan rasa, rating
 6. **Offline** dan **dua bahasa**
+
+Setelah beta, v1.0 juga membawa mode Takaran/Eksperimen, pilih beans sebelum seduh, tab Beans, cari biji kopi (62 origin), jadwal tuang yang bisa diatur sendiri, dan masukan dari dalam aplikasi.
 
 ## Takaran Default (titik awal, bisa diubah user)
 
@@ -95,8 +97,7 @@ bloom           = kopi × 2–3 (ml), 30–45 detik
 ## Fase Lanjut (setelah MVP)
 
 - Brew log dan grafik riwayat seduhan
-- Database biji kopi dan roastery lokal
-- Skala porsi (1 cangkir → banyak orang)
+- Database roastery lokal
 - Share resep via link/QR
 - Kalkulator TDS / extraction yield
 - Koneksi timbangan Bluetooth (butuh versi aplikasi native)

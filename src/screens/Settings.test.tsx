@@ -138,6 +138,6 @@ describe('settings', () => {
 
   it('shows the app version', () => {
     renderAt('/pengaturan')
-    expect(screen.getByText(/Versi 0\.9\.0/)).toBeInTheDocument()
+    expect(screen.getByText(/Versi 1\.0\.0/)).toBeInTheDocument()
   })
 })
