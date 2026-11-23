@@ -168,6 +168,7 @@ Aturan gaya:
 | `settings.theme.light` | Terang | Light |
 | `settings.theme.dark` | Gelap | Dark |
 | `settings.theme.system` | Ikuti HP | Match phone |
+| `settings.theme.lcd` | Timbangan | Scale |
 | `settings.units` | Satuan | Units |
 | `settings.weight` | Berat | Weight |
 | `settings.volume` | Volume | Volume |

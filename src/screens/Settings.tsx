@@ -98,7 +98,9 @@ export default function Settings() {
                   { value: 'light', label: t('settings.theme.light') },
                   { value: 'dark', label: t('settings.theme.dark') },
                   { value: 'system', label: t('settings.theme.system') },
+                  { value: 'lcd', label: t('settings.theme.lcd') },
                 ]}
+                columns={2}
               />
             </div>
           </Card>

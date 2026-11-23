@@ -69,6 +69,14 @@ describe('settings', () => {
     expect(document.documentElement.dataset.theme).toBeUndefined()
   })
 
+  it('offers the scale (LCD) theme', async () => {
+    const user = userEvent.setup()
+    renderAt('/pengaturan')
+    await user.click(screen.getByRole('button', { name: 'Timbangan' }))
+    expect(document.documentElement.dataset.theme).toBe('lcd')
+    expect(localStorage.getItem('cb.theme')).toBe('"lcd"')
+  })
+
   it('switches units everywhere: calculator, schedule and saved recipes', async () => {
     await addRecipe({ methodId: 'v60', name: 'Pagi', coffee: 15, ratio: 16, style: 'standard', bean: '', roastery: '', notes: '', rating: 0 })
     const user = userEvent.setup()
