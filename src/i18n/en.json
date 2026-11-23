@@ -113,6 +113,7 @@
   "settings.theme.light": "Light",
   "settings.theme.dark": "Dark",
   "settings.theme.system": "Match phone",
+  "settings.theme.lcd": "Scale",
   "settings.units": "Units",
   "settings.weight": "Weight",
   "settings.volume": "Volume",

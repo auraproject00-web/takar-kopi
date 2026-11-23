@@ -74,7 +74,7 @@ export default function Timer({ method }: { method: BrewMethod }) {
   const tempText = tempC !== null ? ` · ${u.fmtTemp(tempC)}` : ''
 
   return (
-    <main className="light-tokens mx-auto flex min-h-dvh w-full max-w-md flex-col bg-ink text-white">
+    <main className="timer-screen light-tokens mx-auto flex min-h-dvh w-full max-w-md flex-col bg-ink text-white">
       <div ref={flashRef} aria-hidden="true" className="pointer-events-none fixed inset-0 z-10 bg-[#e08a3c] opacity-0" />
       <header className="flex items-center justify-between py-5 pr-3 pl-5">
         <div className="flex flex-col gap-0.5">
@@ -92,7 +92,7 @@ export default function Timer({ method }: { method: BrewMethod }) {
         </Link>
       </header>
 
-      <section className="flex flex-col items-center gap-1.5 px-5 pt-6 pb-5 text-center" aria-live="polite">
+      <section className="timer-face flex flex-col items-center gap-1.5 px-5 pt-6 pb-5 text-center" aria-live="polite">
         <span className="text-sm font-semibold tracking-wider text-accent-soft uppercase">
           {done
             ? t('timer.title')

@@ -1,5 +1,9 @@
 # Catatan Rilis
 
+## Belum dirilis
+
+- **Tema Timbangan** (Pengaturan › Tema): tampilan seperti timbangan kopi digital. Badan abu-abu, angka berhuruf LCD, kartu hasil jadi jendela LCD hijau, dan tombol seperti tombol fisik. Timer seduh tampil di layar LCD berbingkai gelap.
+
 ## v1.0.0 — rilis pertama
 
 Coffee Brewing versi 1.0: aplikasi takaran kopi gratis, dua bahasa (Indonesia & Inggris), bisa di-install di HP dan jalan offline.

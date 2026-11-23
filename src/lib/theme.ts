@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { usePersistentState } from './usePersistentState'
 
-export type Theme = 'light' | 'dark' | 'system'
+export type Theme = 'light' | 'dark' | 'system' | 'lcd'
 
-const BAR_COLOR = { light: '#f4f3f1', dark: '#141210' }
+const BAR_COLOR = { light: '#f4f3f1', dark: '#141210', lcd: '#cfd2cb' }
 
 export function useTheme(): [Theme, (theme: Theme) => void] {
   return usePersistentState<Theme>('cb.theme', 'system')
@@ -20,7 +20,8 @@ export function useApplyTheme(): void {
     const media = window.matchMedia?.('(prefers-color-scheme: dark)')
     const paintBar = () => {
       const dark = theme === 'dark' || (theme === 'system' && media?.matches === true)
-      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? BAR_COLOR.dark : BAR_COLOR.light)
+      const bar = theme === 'lcd' ? BAR_COLOR.lcd : dark ? BAR_COLOR.dark : BAR_COLOR.light
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', bar)
     }
     paintBar()
     media?.addEventListener?.('change', paintBar)
